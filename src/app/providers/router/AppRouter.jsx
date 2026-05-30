@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { PageLoader } from '../../../shared/ui/PageLoader';
-import { routeConfig } from '../../../shared/config/routerConfig';
+import { PageLoader } from '@/shared/ui/PageLoader';
+import { routeConfig } from '@/shared/config/routerConfig';
 
 const AppRouter = () => {
   const renderWithWrapper = (route) => {

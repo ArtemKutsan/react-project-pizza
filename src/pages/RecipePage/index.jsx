@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { RouterPath } from '../../shared/config/routerConfig';
+import { RouterPath } from '@/shared/config/routerConfig';
 
 const RecipePage = () => {
   const [recipes, setRecipes] = useState([]);

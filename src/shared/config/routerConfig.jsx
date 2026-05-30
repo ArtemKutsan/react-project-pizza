@@ -1,8 +1,8 @@
-import MainPage from '../../pages/MainPage';
-import RecipePage from '../../pages/RecipePage';
-import CategoriesPage from '../../pages/CategoriesPage';
-import RecipePageDetail from '../../pages/RecipePageDetails';
-import NotFoundPage from '../../pages/NotFoundPage';
+import MainPage from '@/pages/MainPage';
+import RecipePage from '@/pages/RecipePage';
+import CategoriesPage from '@/pages/CategoriesPage';
+import RecipePageDetail from '@/pages/RecipePageDetails';
+import NotFoundPage from '@/pages/NotFoundPage';
 
 export const AppRouter = {
   MAIN: 'main',
