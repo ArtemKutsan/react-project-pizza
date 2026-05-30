@@ -65,7 +65,7 @@ export const RouterPath = {
 Маппинг ключ → URL-путь. Компоненты, которым нужно сформировать ссылку, импортируют `RouterPath` и подставляют нужный ключ:
 
 ```js
-// Sidebar.jsx
+// Sidebar/index.jsx
 <Link to={RouterPath.main}>Main</Link>
 
 // RecipePage.jsx
@@ -122,6 +122,45 @@ const AppRouter = () => {
 2. Рендерит `<Route path={...} element={...} />` с ключом по пути.
 
 Итоговый `<Routes>` передаётся напрямую в `App`.
+
+Пример итогового `<Routes>`:
+
+```js
+<Routes>
+  <Route
+    path="/"
+    element={
+      <Suspense fallback={<PageLoader />}>
+        <MainPage />
+      </Suspense>
+    }
+  />
+  <Route
+    path="/recipe"
+    element={
+      <Suspense fallback={<PageLoader />}>
+        <RecipePage />
+      </Suspense>
+    }
+  />
+  <Route
+    path="/recipe/:id"
+    element={
+      <Suspense fallback={<PageLoader />}>
+        <RecipePageDetail />
+      </Suspense>
+    }
+  />
+  <Route
+    path="*"
+    element={
+      <Suspense fallback={<PageLoader />}>
+        <NotFoundPage />
+      </Suspense>
+    }
+  />
+</Routes>
+```
 
 ---
 
