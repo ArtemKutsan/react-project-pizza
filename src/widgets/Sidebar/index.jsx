@@ -29,7 +29,11 @@ const Sidebar = () => {
                   `${navLinkBase} ${isActive ? navLinkActive : navLinkIdle}`
                 }
               >
-                <span className="size-2 rounded-full bg-current opacity-75" aria-hidden="true" />
+                {item.Icon ? (
+                  <item.Icon className="size-6" aria-hidden="true" />
+                ) : (
+                  <span className="size-2 rounded-full bg-current opacity-75" aria-hidden="true" />
+                )}
                 <span>{item.label}</span>
               </NavLink>
             </li>
