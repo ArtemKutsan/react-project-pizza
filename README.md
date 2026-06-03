@@ -19,7 +19,7 @@ src/
 **pages** — по одной папке на страницу. Каждая страница — изолированный компонент, не знающий о других страницах. Текущие страницы:
 
 - `MainPage` — главная
-- `RecipePage` — список рецептов (загружает данные из API)
+- `RecipesPage` — список рецептов (загружает данные из API)
 - `RecipePageDetail` — детальный вид рецепта по `id`
 - `NotFoundPage` — заглушка для несуществующих маршрутов
 
@@ -68,7 +68,7 @@ export const RouterPath = {
 // Sidebar/index.jsx
 <Link to={RouterPath.main}>Main</Link>
 
-// RecipePage.jsx
+// RecipesPage.jsx
 <Link to={RouterPath.recipe_detail.replace(":id", recipe.id)}>
 ```
 
@@ -84,7 +84,7 @@ export const routeConfig = {
   },
   [AppRouter.RECIPE]: {
     path: RouterPath.recipe,
-    element: <RecipePage />,
+    element: <RecipesPage />,
   },
   [AppRouter.RECIPE_DETAIL]: {
     path: RouterPath.recipe_detail,
@@ -139,7 +139,7 @@ const AppRouter = () => {
     path="/recipe"
     element={
       <Suspense fallback={<PageLoader />}>
-        <RecipePage />
+        <RecipesPage />
       </Suspense>
     }
   />

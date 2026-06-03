@@ -1,23 +1,23 @@
-import MainPage from '@/pages/MainPage';
-import RecipePage from '@/pages/RecipePage';
-import CategoriesPage from '@/pages/CategoriesPage';
-import RecipePageDetail from '@/pages/RecipePageDetails';
-import NotFoundPage from '@/pages/NotFoundPage';
+import MainPage from "@/pages/MainPage";
+import RecipesPage from "@/pages/RecipesPage";
+import CategoriesPage from "@/pages/CategoriesPage";
+import RecipePageDetail from "@/pages/RecipePageDetails";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 export const AppRouter = {
-  MAIN: 'main',
-  RECIPE: 'recipe',
-  CATEGORIES: 'categories',
-  RECIPE_DETAIL: 'recipe_detail',
-  NOT_FOUND: 'not_found',
+  MAIN: "main",
+  RECIPES: "recipes",
+  CATEGORIES: "categories",
+  RECIPE_DETAIL: "recipe_detail",
+  NOT_FOUND: "not_found",
 };
 
 export const RouterPath = {
-  [AppRouter.MAIN]: '/',
-  [AppRouter.RECIPE]: '/recipe',
-  [AppRouter.CATEGORIES]: '/categories',
-  [AppRouter.RECIPE_DETAIL]: '/recipe/:id',
-  [AppRouter.NOT_FOUND]: '*',
+  [AppRouter.MAIN]: "/",
+  [AppRouter.RECIPES]: "/recipes",
+  [AppRouter.CATEGORIES]: "/categories",
+  [AppRouter.RECIPE_DETAIL]: "/recipes/:id",
+  [AppRouter.NOT_FOUND]: "*",
 };
 
 export const routeConfig = {
@@ -25,9 +25,9 @@ export const routeConfig = {
     path: RouterPath.main,
     element: <MainPage />,
   },
-  [AppRouter.RECIPE]: {
-    path: RouterPath.recipe,
-    element: <RecipePage />,
+  [AppRouter.RECIPES]: {
+    path: RouterPath.recipes,
+    element: <RecipesPage />,
   },
   [AppRouter.CATEGORIES]: {
     path: RouterPath.categories,
