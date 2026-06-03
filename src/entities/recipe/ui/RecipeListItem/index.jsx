@@ -9,7 +9,7 @@ import LikeIcon from '@/assets/icons/like.svg?react';
 const RecipeListItem = ({ recipe }) => {
   const totalTime = (recipe?.prepTimeMinutes ?? 0) + (recipe?.cookTimeMinutes ?? 0);
   const cuisineLabel = recipe?.cuisine ?? 'Cuisine';
-  const difficultyLabel = recipe?.difficulty ?? 'Easy';
+  // const difficultyLabel = recipe?.difficulty ?? 'Easy';
 
   return (
     <Link
