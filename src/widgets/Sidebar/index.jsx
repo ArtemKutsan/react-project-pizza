@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { RouterPath } from '@/shared/config/routerConfig';
 import { navItems } from '@/widgets/Sidebar/navItems';
+import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 
 const navLinkBase =
   'flex items-center gap-4 rounded-2xl px-4 py-4 text-sm font-semibold transition-colors';
@@ -13,7 +14,8 @@ const Sidebar = () => {
       className="flex min-h-screen w-72 shrink-0 flex-col border-r border-slate-200 bg-white px-4 py-6 text-slate-900 lg:sticky lg:top-0 lg:h-screen max-md:min-h-0 max-md:w-full max-md:border-b max-md:border-r-0"
       aria-label="Primary"
     >
-      <NavLink to={RouterPath.main} aria-label="Home">
+      <NavLink to={RouterPath.main} aria-label="Home" className="flex items-center gap-2 mb-4">
+        <ChefHatIcon aria-hidden="true" className="size-8 text-emerald-700" />
         <span className="text-lg font-bold text-slate-900">RecipeBox</span>
       </NavLink>
 
