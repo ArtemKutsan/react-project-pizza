@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { RouterPath } from '@/shared/config/routerConfig';
+import { RecipeList } from '@/entities/recipe/ui';
 
 const RecipePage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -21,13 +20,7 @@ const RecipePage = () => {
   return (
     <div>
       <h1>Recipes</h1>
-      <ul>
-        {recipes.map((recipe) => (
-          <li key={recipe.id}>
-            <Link to={RouterPath.recipe_detail.replace(':id', recipe.id)}>{recipe.name}</Link>
-          </li>
-        ))}
-      </ul>
+      <RecipeList recipes={recipes} />
     </div>
   );
 };
