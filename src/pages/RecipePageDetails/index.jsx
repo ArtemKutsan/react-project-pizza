@@ -1,14 +1,18 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import TimerIcon from "@/assets/icons/timer.svg?react";
-import FireIcon from "@/assets/icons/fire-line.svg?react";
-import ServingsIcon from "@/assets/icons/servings.svg?react";
-import UtensilsIcon from "@/assets/icons/utensils.svg?react";
-import ChefHatIcon from "@/assets/icons/chef-hat.svg?react";
-import ListIcon from "@/assets/icons/list.svg?react";
-import { selectRecipeById, selectRecipesError, selectRecipesStatus } from "@/entities/recipe/model/selectors";
-import { fetchRecipes } from "@/entities/recipe/model/thunks";
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import TimerIcon from '@/assets/icons/timer.svg?react';
+import FireIcon from '@/assets/icons/fire-line.svg?react';
+import ServingsIcon from '@/assets/icons/servings.svg?react';
+import UtensilsIcon from '@/assets/icons/utensils.svg?react';
+import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
+import ListIcon from '@/assets/icons/list.svg?react';
+import {
+  selectRecipeById,
+  selectRecipesError,
+  selectRecipesStatus,
+} from '@/entities/recipe/model/selectors';
+import { fetchRecipes } from '@/entities/recipe/model/thunks';
 
 const RecipePageDetail = () => {
   const { id } = useParams();
@@ -18,12 +22,12 @@ const RecipePageDetail = () => {
   const error = useSelector(selectRecipesError);
 
   useEffect(() => {
-    if (status === "idle") {
+    if (status === 'idle') {
       dispatch(fetchRecipes());
     }
   }, [dispatch, status]);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <p>Loading...</p>;
   }
 
@@ -45,12 +49,18 @@ const RecipePageDetail = () => {
       <article className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
           <div className="h-full">
-            <img src={recipe.image} alt={recipe.name} className="h-full min-h-64 w-full object-cover" />
+            <img
+              src={recipe.image}
+              alt={recipe.name}
+              className="h-full min-h-64 w-full object-cover"
+            />
           </div>
 
           <div className="flex flex-col gap-8 px-8 py-8">
             <div className="flex items-center justify-between gap-4">
-              <span className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-lime-700">{recipe.difficulty}</span>
+              <span className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-lime-700">
+                {recipe.difficulty}
+              </span>
               <span className="inline-flex items-baseline gap-2 text-sm text-slate-700">
                 <span className="text-lg text-amber-400">★</span>
                 <span className="font-medium text-slate-700">{recipe.rating}</span>
@@ -59,25 +69,34 @@ const RecipePageDetail = () => {
             </div>
 
             <div className="space-y-4">
-              <h1 className="max-w-xl text-4xl font-semibold tracking-tight text-slate-900 lg:text-5xl">{recipe.name}</h1>
+              <h1 className="max-w-xl text-4xl font-semibold tracking-tight text-slate-900 lg:text-5xl">
+                {recipe.name}
+              </h1>
               {/* Описание */}
-              <p className="max-w-2xl text-slate-500">{recipe?.description ?? `A simple and delicious ${recipe?.cuisine?.toLowerCase() || "cuisine"} classic with fresh ingredients.`}</p>
+              <p className="max-w-2xl text-slate-500">
+                {recipe?.description ??
+                  `A simple and delicious ${recipe?.cuisine?.toLowerCase() || 'cuisine'} classic with fresh ingredients.`}
+              </p>
             </div>
 
             <div className="grid gap-6 border-y border-slate-200 py-6 sm:grid-cols-2 md:grid-cols-3">
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <TimerIcon className="size-5 text-slate-700" aria-hidden="true" />
-                  <div className="text-slate-700">Prep Time</div>
+                  <div className="text-sm text-slate-700">Prep Time</div>
                 </div>
-                <span className="text-sm font-medium text-slate-400">{recipe.prepTimeMinutes} mins</span>
+                <span className="text-sm font-medium text-slate-400">
+                  {recipe.prepTimeMinutes} mins
+                </span>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <TimerIcon className="size-5 text-slate-700" aria-hidden="true" />
                   <div className="text-sm text-slate-700">Cook Time</div>
                 </div>
-                <span className="text-sm font-medium text-slate-400">{recipe.cookTimeMinutes} mins</span>
+                <span className="text-sm font-medium text-slate-400">
+                  {recipe.cookTimeMinutes} mins
+                </span>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
@@ -98,20 +117,25 @@ const RecipePageDetail = () => {
                   <FireIcon className="size-5 text-slate-700" aria-hidden="true" />
                   <div className="text-sm text-slate-700">Calories</div>
                 </div>
-                <span className="text-sm font-medium text-slate-400">{recipe.caloriesPerServing} kcal</span>
+                <span className="text-sm font-medium text-slate-400">
+                  {recipe.caloriesPerServing} kcal
+                </span>
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <UtensilsIcon className="size-5 text-slate-700" aria-hidden="true" />
                   <div className="text-sm text-slate-700">Meal Type</div>
                 </div>
-                <span className="text-sm font-medium text-slate-400">{mealTypes.join(", ")}</span>
+                <span className="text-sm font-medium text-slate-400">{mealTypes.join(', ')}</span>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-4">
               {tags.map((tag) => (
-                <span key={tag} className="rounded-full bg-emerald-50 px-4 py-2 text-sm text-lime-700">
+                <span
+                  key={tag}
+                  className="rounded-full bg-emerald-50 px-4 py-2 text-sm text-lime-700"
+                >
                   {tag}
                 </span>
               ))}
@@ -143,7 +167,9 @@ const RecipePageDetail = () => {
             <ol className="space-y-6">
               {instructions.map((instruction, index) => (
                 <li key={instruction} className="grid grid-cols-[auto_1fr] items-baseline gap-4">
-                  <span className="flex size-8 items-center justify-center rounded-full bg-lime-700 text-sm font-semibold text-white">{index + 1}</span>
+                  <span className="flex size-8 items-center justify-center rounded-full bg-lime-700 text-sm font-semibold text-white">
+                    {index + 1}
+                  </span>
                   <p className="pt-1 text-slate-600">{instruction}</p>
                 </li>
               ))}
