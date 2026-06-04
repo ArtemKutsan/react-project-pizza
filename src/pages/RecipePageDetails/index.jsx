@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { InfoLabel } from '@/shared/ui';
 import TimerIcon from '@/assets/icons/timer.svg?react';
 import FireIcon from '@/assets/icons/fire-line.svg?react';
 import ServingsIcon from '@/assets/icons/servings.svg?react';
@@ -80,54 +81,12 @@ const RecipePageDetail = () => {
             </div>
 
             <div className="grid gap-6 border-y border-slate-200 py-6 sm:grid-cols-2 md:grid-cols-3">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <TimerIcon className="size-5 text-slate-700" aria-hidden="true" />
-                  <div className="text-sm text-slate-700">Prep Time</div>
-                </div>
-                <span className="text-sm font-medium text-slate-400">
-                  {recipe.prepTimeMinutes} mins
-                </span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <TimerIcon className="size-5 text-slate-700" aria-hidden="true" />
-                  <div className="text-sm text-slate-700">Cook Time</div>
-                </div>
-                <span className="text-sm font-medium text-slate-400">
-                  {recipe.cookTimeMinutes} mins
-                </span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <ServingsIcon className="size-5 text-slate-700" aria-hidden="true" />
-                  <div className="text-sm text-slate-700">Servings</div>
-                </div>
-                <span className="text-sm font-medium text-slate-400">{recipe.servings}</span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <ChefHatIcon className="size-5 text-slate-700" aria-hidden="true" />
-                  <div className="text-sm text-slate-700">Cuisine</div>
-                </div>
-                <span className="text-sm font-medium text-slate-400">{recipe.cuisine}</span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <FireIcon className="size-5 text-slate-700" aria-hidden="true" />
-                  <div className="text-sm text-slate-700">Calories</div>
-                </div>
-                <span className="text-sm font-medium text-slate-400">
-                  {recipe.caloriesPerServing} kcal
-                </span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <UtensilsIcon className="size-5 text-slate-700" aria-hidden="true" />
-                  <div className="text-sm text-slate-700">Meal Type</div>
-                </div>
-                <span className="text-sm font-medium text-slate-400">{mealTypes.join(', ')}</span>
-              </div>
+              <InfoLabel icon={TimerIcon} label="Prep Time" value={`${recipe.prepTimeMinutes} mins`} />
+              <InfoLabel icon={TimerIcon} label="Cook Time" value={`${recipe.cookTimeMinutes} mins`} />
+              <InfoLabel icon={ServingsIcon} label="Servings" value={recipe.servings} />
+              <InfoLabel icon={ChefHatIcon} label="Cuisine" value={recipe.cuisine} />
+              <InfoLabel icon={FireIcon} label="Calories" value={`${recipe.caloriesPerServing} kcal`} />
+              <InfoLabel icon={UtensilsIcon} label="Meal Type" value={mealTypes.join(', ')} />
             </div>
 
             <div className="flex flex-wrap gap-4">
