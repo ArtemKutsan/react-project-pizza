@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Badge, InfoLabel } from '@/shared/ui';
+import { Badge, BulletList, InfoLabel } from '@/shared/ui';
 import TimerIcon from '@/assets/icons/timer.svg?react';
 import FireIcon from '@/assets/icons/fire-line.svg?react';
 import ServingsIcon from '@/assets/icons/servings.svg?react';
@@ -101,14 +101,7 @@ const RecipePageDetail = () => {
               <ChefHatIcon className="ml-1.5 size-5 text-lime-700" aria-hidden="true" />
               <h2 className="text-2xl font-semibold text-slate-900">Ingredients</h2>
             </div>
-            <ul className="space-y-4">
-              {ingredients.map((ingredient) => (
-                <li key={ingredient} className="flex items-center gap-4 text-slate-600">
-                  <span className="ml-3 size-2 rounded-full bg-lime-700" aria-hidden="true" />
-                  <span>{ingredient}</span>
-                </li>
-              ))}
-            </ul>
+            <BulletList items={ingredients} />
           </section>
 
           <section className="border-slate-200 lg:pl-8">
