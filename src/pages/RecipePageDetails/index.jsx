@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { InfoLabel } from '@/shared/ui';
+import { Badge, InfoLabel } from '@/shared/ui';
 import TimerIcon from '@/assets/icons/timer.svg?react';
 import FireIcon from '@/assets/icons/fire-line.svg?react';
 import ServingsIcon from '@/assets/icons/servings.svg?react';
@@ -59,9 +59,7 @@ const RecipePageDetail = () => {
 
           <div className="flex flex-col gap-8 px-8 py-8">
             <div className="flex items-center justify-between gap-4">
-              <span className="rounded-full bg-emerald-50 px-4 py-2 text-sm font-medium text-lime-700">
-                {recipe.difficulty}
-              </span>
+              <Badge>{recipe.difficulty}</Badge>
               <span className="inline-flex items-baseline gap-2 text-sm text-slate-700">
                 <span className="text-lg text-amber-400">★</span>
                 <span className="font-medium text-slate-700">{recipe.rating}</span>
@@ -91,12 +89,7 @@ const RecipePageDetail = () => {
 
             <div className="flex flex-wrap gap-4">
               {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-emerald-50 px-4 py-2 text-sm text-lime-700"
-                >
-                  {tag}
-                </span>
+                <Badge key={tag}>{tag}</Badge>
               ))}
             </div>
           </div>
