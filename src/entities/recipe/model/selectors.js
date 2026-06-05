@@ -1,3 +1,6 @@
+// src/entities/recipe/model/selectors.js
+
+// Селекторы для получения данных о рецептах из состояния Redux
 export const selectRecipes = (state) => state.recipes.items;
 export const selectRecipesStatus = (state) => state.recipes.status;
 export const selectRecipesError = (state) => state.recipes.error;
