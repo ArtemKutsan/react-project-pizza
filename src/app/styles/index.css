@@ -16,4 +16,9 @@
     background: #fafafa;
     color: #0f172b;
   }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
 }
