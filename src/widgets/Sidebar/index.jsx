@@ -4,7 +4,7 @@ import { navItems } from '@/widgets/Sidebar/navItems';
 import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 
 const navLinkBase =
-  'flex items-center gap-4 rounded-2xl px-4 py-4 text-sm font-semibold transition-colors';
+  'flex items-center gap-4 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors';
 const navLinkActive = 'bg-emerald-50 text-lime-700';
 const navLinkIdle = 'text-slate-600 hover:bg-slate-50 hover:text-slate-900';
 
