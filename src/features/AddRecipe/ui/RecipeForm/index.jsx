@@ -1,6 +1,6 @@
 import { Button, FormField } from '@/shared/ui';
 
-const RecipeForm = ({ register, handleSubmit, onSubmit, message }) => (
+const RecipeForm = ({ register, handleSubmit, onSubmit, message, isSubmitting }) => (
   <form
     className="rounded-3xl border border-slate-200 bg-white p-6"
     onSubmit={handleSubmit(onSubmit)}
@@ -72,7 +72,9 @@ const RecipeForm = ({ register, handleSubmit, onSubmit, message }) => (
 
     <div className="mt-6 flex items-center justify-between gap-4">
       <p className="text-sm text-lime-700">{message}</p>
-      <Button type="submit">Add recipe</Button>
+      <Button type="submit" disabled={isSubmitting}>
+        Add recipe
+      </Button>
     </div>
   </form>
 );

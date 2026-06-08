@@ -1,10 +1,13 @@
 // src/pages/MealPlannerPage/index.jsx
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { addRecipe } from '@/entities/recipe/model/recipesSlice';
-import { selectRecipes } from '@/entities/recipe/model/selectors';
+import { createRecipe } from '@/entities/recipe/model/thunks';
 import { RecipeForm } from '@/features/AddRecipe';
+import { resetCreateRecipeState } from '@/features/AddRecipe/model/createRecipeSlice';
+import {
+  selectCreateRecipeError,
+  selectCreateRecipeStatus,
+} from '@/features/AddRecipe/model/selectors';
 
 // Начальное состояние формы для создания нового рецепта
 const initialFormValues = {
@@ -25,29 +28,26 @@ const initialFormValues = {
 const MealPlannerPage = () => {
   // Диспетчер Redux для отправки действий в store
   const dispatch = useDispatch();
-  // Получаем список рецептов из состояния Redux, чтобы определить следующий уникальный id для нового рецепта
-  const recipes = useSelector(selectRecipes);
-  // Локальное состояние для управления формой и отображения сообщений пользователю
-  const [message, setMessage] = useState('');
+  // Селекторы для получения статуса создания рецепта и возможной ошибки из Redux store
+  const createStatus = useSelector(selectCreateRecipeStatus);
+  // Селектор для получения возможной ошибки при создании рецепта из Redux store
+  const createError = useSelector(selectCreateRecipeError);
+  // Инициализация React Hook Form с начальными значениями формы
   const { register, handleSubmit, reset } = useForm({
     defaultValues: initialFormValues,
   });
-  // Вычисляем следующий уникальный id для нового рецепта, основываясь на существующих рецептах в состоянии Redux
-  const nextRecipeId =
-    recipes.reduce((maxRecipeId, recipe) => Math.max(maxRecipeId, Number(recipe.id) || 0), 0) + 1;
 
   // Обработчик отправки формы, который создает новый рецепт на основе данных из формы и добавляет его в Redux store
-  const onSubmit = (formValues) => {
+  const onSubmit = async (formValues) => {
     const nextRecipe = {
-      id: nextRecipeId,
       name: formValues.name.trim(),
       image: formValues.image.trim(),
       cuisine: formValues.cuisine.trim(),
-      // Преобразуем строку с типами блюд в массив, удаляя лишние пробелы и пустые элементы
+      // Преобразуем строку типов блюд в массив, удаляя лишние пробелы и пустые строки
       mealType: formValues.mealType
         .split(',') // Разделяем строку по запятым, чтобы получить массив типов блюд
-        .map((item) => item.trim()) // Удаляем лишние пробелы вокруг каждого элемента
-        .filter(Boolean), // Удаляем пустые элементы из массива, которые могут возникнуть из-за лишних запятых или пробелов
+        .map((item) => item.trim()) // Удаляем лишние пробелы вокруг каждого типа блюда
+        .filter(Boolean), // Удаляем пустые строки из массива, которые могут возникнуть из-за лишних запятых или пробелов
       difficulty: formValues.difficulty,
       servings: Number(formValues.servings),
       prepTimeMinutes: Number(formValues.prepTimeMinutes),
@@ -70,12 +70,19 @@ const MealPlannerPage = () => {
       userId: 1,
     };
 
-    // Отправляем действие для добавления нового рецепта в Redux store
-    dispatch(addRecipe(nextRecipe));
-    // Сбрасываем форму к начальным значениям и отображаем сообщение пользователю о том, что рецепт был добавлен
-    reset(initialFormValues);
-    // Устанавливаем сообщение для отображения пользователю после добавления рецепта
-    setMessage('Recipe added to store.');
+    // Отправляем действие для создания рецепта и обрабатываем результат
+    try {
+      // Диспетчеризуем действие createRecipe с данными нового рецепта и ожидаем его завершения, используя unwrap для получения результата или ошибки
+      const createdRecipe = await dispatch(createRecipe(nextRecipe)).unwrap();
+
+      console.log('DummyJSON recipe response:', createdRecipe);
+      // Сбрасываем форму к начальному состоянию после успешного создания рецепта
+      reset(initialFormValues);
+      // Сбрасываем состояние создания рецепта в Redux store, чтобы очистить статус и ошибки
+      dispatch(resetCreateRecipeState());
+    } catch (error) {
+      console.error('Failed to create recipe:', error);
+    }
   };
 
   return (
@@ -85,7 +92,21 @@ const MealPlannerPage = () => {
         <p className="text-slate-500">Add a new recipe to the local store.</p>
       </header>
 
-      <RecipeForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} message={message} />
+      <RecipeForm
+        register={register}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        message={
+          createStatus === 'loading'
+            ? 'Creating recipe...'
+            : createStatus === 'failed'
+              ? createError
+              : createStatus === 'succeeded'
+                ? 'Recipe added to store.'
+                : ''
+        }
+        isSubmitting={createStatus === 'loading'}
+      />
     </section>
   );
 };
