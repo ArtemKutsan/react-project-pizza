@@ -8,5 +8,5 @@ import ListIcon from '@/assets/icons/list.svg?react';
 export const navItems = [
   { to: RouterPath.recipes, label: 'Recipes', Icon: HomeIcon },
   { to: RouterPath.categories, label: 'Categories', Icon: CategoriesIcon },
-  { to: RouterPath.meal_planner, label: 'Meal Planner', Icon: ListIcon },
+  { to: RouterPath.add_recipe, label: 'Add Recipe', Icon: ListIcon },
 ];

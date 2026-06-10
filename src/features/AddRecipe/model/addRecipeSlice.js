@@ -1,35 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createRecipe } from '@/entities/recipe/model/thunks';
+import { addRecipe } from '@/entities/recipe/model/thunks';
 
 const initialState = {
   status: 'idle',
   error: null,
 };
 
-const createRecipeSlice = createSlice({
-  name: 'createRecipe',
+const addRecipeSlice = createSlice({
+  name: 'addRecipe',
   initialState,
   reducers: {
-    resetCreateRecipeState(state) {
+    resetAddRecipeState(state) {
       state.status = 'idle';
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createRecipe.pending, (state) => {
+      .addCase(addRecipe.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(createRecipe.fulfilled, (state) => {
+      .addCase(addRecipe.fulfilled, (state) => {
         state.status = 'succeeded';
       })
-      .addCase(createRecipe.rejected, (state) => {
+      .addCase(addRecipe.rejected, (state) => {
         state.status = 'failed';
         state.error = 'Failed to create recipe';
       });
   },
 });
 
-export const { resetCreateRecipeState } = createRecipeSlice.actions;
-export const createRecipeReducer = createRecipeSlice.reducer;
+export const { resetAddRecipeState } = addRecipeSlice.actions;
+export const addRecipeReducer = addRecipeSlice.reducer;

@@ -2,7 +2,7 @@
 import MainPage from '@/pages/MainPage';
 import RecipesPage from '@/pages/RecipesPage';
 import CategoriesPage from '@/pages/CategoriesPage';
-import MealPlannerPage from '@/pages/MealPlannerPage';
+import AddRecipePage from '@/pages/AddRecipePage';
 import RecipePageDetail from '@/pages/RecipePageDetails';
 import NotFoundPage from '@/pages/NotFoundPage';
 
@@ -11,7 +11,7 @@ export const AppRouter = {
   MAIN: 'main',
   RECIPES: 'recipes',
   CATEGORIES: 'categories',
-  MEAL_PLANNER: 'meal_planner',
+  ADD_RECIPE: 'add_recipe',
   RECIPE_DETAIL: 'recipe_detail',
   NOT_FOUND: 'not_found',
 };
@@ -21,7 +21,7 @@ export const RouterPath = {
   [AppRouter.MAIN]: '/',
   [AppRouter.RECIPES]: '/recipes',
   [AppRouter.CATEGORIES]: '/categories',
-  [AppRouter.MEAL_PLANNER]: '/meal-planner',
+  [AppRouter.ADD_RECIPE]: '/add-recipe',
   [AppRouter.RECIPE_DETAIL]: '/recipes/:id',
   [AppRouter.NOT_FOUND]: '*',
 };
@@ -40,9 +40,9 @@ export const routeConfig = {
     path: RouterPath.categories,
     element: <CategoriesPage />,
   },
-  [AppRouter.MEAL_PLANNER]: {
-    path: RouterPath.meal_planner,
-    element: <MealPlannerPage />,
+  [AppRouter.ADD_RECIPE]: {
+    path: RouterPath.add_recipe,
+    element: <AddRecipePage />,
   },
   [AppRouter.RECIPE_DETAIL]: {
     path: RouterPath.recipe_detail,
