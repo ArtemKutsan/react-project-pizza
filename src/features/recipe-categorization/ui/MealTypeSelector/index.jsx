@@ -1,6 +1,8 @@
+// src/features/recipe-categorization/ui/MealTypeSelector/index.jsx
 import { useRef } from 'react';
 import MealTypeSelectorItem from '../MealTypeSelectorItem';
 
+// Компонент MealTypeSelector отображает горизонтальный список типов блюд (meal types) с кнопками для прокрутки влево и вправо. Он принимает массив items, активный элемент activeItem и функцию onSelect для обработки выбора типа блюда. Контейнер с типами блюд прокручивается при клике на кнопки прокрутки, используя реф для доступа к DOM-элементу.
 const MealTypeSelector = ({ items, activeItem, onSelect }) => {
   // Реф для контейнера с типами блюд, который будет прокручиваться при клике на кнопки прокрутки
   const listRef = useRef(null);

@@ -6,13 +6,17 @@ import {
   selectRecipesError,
   selectRecipesStatus,
 } from '@/entities/recipe/model/selectors';
+import {
+  filterRecipesByCuisine,
+  filterRecipesByMealType,
+  getCuisines,
+} from '@/entities/recipe/lib';
 import { RecipeListItem } from '@/entities/recipe/ui';
 import {
   CuisineList,
+  getMealTypeItems,
   MealTypeSelector,
-  getCuisines,
-  getMealTypes,
-} from '@/features/FilterRecipesByCategory';
+} from '@/features/recipe-categorization';
 
 const CategoriesPage = () => {
   // Получаем необходимые данные из Redux store и создаем локальное состояние для выбранного типа блюда и кухни
@@ -35,14 +39,13 @@ const CategoriesPage = () => {
   }, [dispatch, status]);
 
   // Получаем список типов (категорий) блюд с их количеством и мемоизируем результат, чтобы не пересчитывать при каждом рендере
-  const mealTypes = useMemo(() => getMealTypes(recipes), [recipes]);
+  const mealTypes = useMemo(() => getMealTypeItems(recipes), [recipes]);
 
   // Фильтруем рецепты по выбранному типу блюда и мемоизируем результат, чтобы не пересчитывать при каждом рендере
-  const recipesByMealType = useMemo(() => {
-    if (activeMealType === 'All') return recipes;
-
-    return recipes.filter((recipe) => recipe.mealType?.includes(activeMealType));
-  }, [activeMealType, recipes]);
+  const recipesByMealType = useMemo(
+    () => filterRecipesByMealType(recipes, activeMealType),
+    [activeMealType, recipes],
+  );
 
   // Получаем список кухонь с их количеством и мемоизируем результат, чтобы не пересчитывать при каждом рендере
   const cuisines = useMemo(() => getCuisines(recipesByMealType), [recipesByMealType]);
@@ -51,7 +54,7 @@ const CategoriesPage = () => {
   const visibleRecipes = useMemo(() => {
     if (!activeCuisine) return [];
 
-    return recipesByMealType.filter((recipe) => recipe.cuisine === activeCuisine);
+    return filterRecipesByCuisine(recipesByMealType, activeCuisine);
   }, [activeCuisine, recipesByMealType]);
 
   // Обработчик выбора типа блюда
