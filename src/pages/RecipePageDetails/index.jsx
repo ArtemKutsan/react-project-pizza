@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Badge, BulletList, InfoLabel, NumberedList } from '@/shared/ui';
 import TimerIcon from '@/assets/icons/timer.svg?react';
 import FireIcon from '@/assets/icons/fire-line.svg?react';
@@ -8,27 +6,14 @@ import ServingsIcon from '@/assets/icons/servings.svg?react';
 import UtensilsIcon from '@/assets/icons/utensils.svg?react';
 import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 import ListIcon from '@/assets/icons/list.svg?react';
-import {
-  selectRecipeById,
-  selectRecipesError,
-  selectRecipesStatus,
-} from '@/entities/recipe/model/selectors';
-import { fetchRecipes } from '@/entities/recipe/model/thunks';
+import { useRecipes } from '@/entities/recipe/model/useRecipes';
 
 const RecipePageDetail = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const recipe = useSelector((state) => selectRecipeById(state, id));
-  const status = useSelector(selectRecipesStatus);
-  const error = useSelector(selectRecipesError);
+  const { recipes, status, error } = useRecipes();
+  const recipe = recipes.find((item) => String(item.id) === String(id));
 
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchRecipes());
-    }
-  }, [dispatch, status]);
-
-  if (status === 'loading') {
+  if (status === 'idle' || status === 'loading') {
     return <p>Loading...</p>;
   }
 

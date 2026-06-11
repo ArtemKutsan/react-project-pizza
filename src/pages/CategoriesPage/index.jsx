@@ -1,11 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchRecipes } from '@/entities/recipe/model/thunks';
-import {
-  selectRecipes,
-  selectRecipesError,
-  selectRecipesStatus,
-} from '@/entities/recipe/model/selectors';
+import { useMemo, useState } from 'react';
+import { useRecipes } from '@/entities/recipe/model/useRecipes';
 import {
   filterRecipesByCuisine,
   filterRecipesByMealType,
@@ -19,24 +13,11 @@ import {
 } from '@/features/recipe-categorization';
 
 const CategoriesPage = () => {
-  // Получаем необходимые данные из Redux store и создаем локальное состояние для выбранного типа блюда и кухни
-  const dispatch = useDispatch();
-
-  // Получаем список рецептов, статус загрузки и возможные ошибки из Redux store
-  const recipes = useSelector(selectRecipes);
-  const status = useSelector(selectRecipesStatus);
-  const error = useSelector(selectRecipesError);
+  const { recipes, status, error } = useRecipes();
 
   // Локальное состояние для выбранного типа блюда (meal type) и кухни (cuisine)
   const [activeMealType, setActiveMealType] = useState('All');
   const [activeCuisine, setActiveCuisine] = useState(null);
-
-  // Загружаем рецепты при монтировании компонента, если статус загрузки - 'idle'
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchRecipes());
-    }
-  }, [dispatch, status]);
 
   // Получаем список типов (категорий) блюд с их количеством и мемоизируем результат, чтобы не пересчитывать при каждом рендере
   const mealTypes = useMemo(() => getMealTypeItems(recipes), [recipes]);
