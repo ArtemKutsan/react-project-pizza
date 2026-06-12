@@ -1,5 +1,5 @@
 // src/pages/MealPlannerPage/index.jsx
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRecipes } from '@/entities/recipe/model/useRecipes';
 import { buildMealPlan } from '@/features/meal-planner/lib/buildMealPlan';
@@ -7,8 +7,10 @@ import { mealPeriods } from '@/features/meal-planner/config/mealPeriods';
 import { getDays } from '@/features/meal-planner/model/days';
 import { selectMealPlan } from '@/features/meal-planner/model/selectors';
 import MealPlannerCalendar from '@/features/meal-planner/ui/MealPlannerCalendar';
+import { Modal } from '@/shared/ui';
 
 const MealPlannerPage = () => {
+  const [selectedSlot, setSelectedSlot] = useState(null);
   // Получаем рецепты, статус загрузки и ошибку с помощью кастомного хука useRecipes
   const { recipes, status, error } = useRecipes();
   // Получаем недельный план с ID рецептов из Redux store
@@ -42,7 +44,14 @@ const MealPlannerPage = () => {
         <h1 className="text-2xl font-semibold text-slate-900">Meal Planner</h1>
         <p className="mt-2 text-slate-500">Plan your meals for the week</p>
       </div>
-      <MealPlannerCalendar days={days} rows={mealPlan} />
+      <MealPlannerCalendar days={days} rows={mealPlan} onAddMeal={setSelectedSlot} />
+      <Modal
+        isOpen={Boolean(selectedSlot)}
+        title={
+          selectedSlot ? `Add meal: ${selectedSlot.mealPeriod}, ${selectedSlot.day}` : 'Add meal'
+        }
+        onClose={() => setSelectedSlot(null)}
+      />
     </section>
   );
 };

@@ -5,7 +5,7 @@ const columnTemplate = {
   gridTemplateColumns: '100px repeat(7, minmax(0, 1fr))',
 };
 
-const MealPlannerCalendar = ({ days, rows }) => {
+const MealPlannerCalendar = ({ days, rows, onAddMeal }) => {
   return (
     <div className="overflow-x-auto pb-4">
       <div className="min-w-280 space-y-4">
@@ -39,7 +39,12 @@ const MealPlannerCalendar = ({ days, rows }) => {
                 item ? (
                   <MealPlannerCard key={`${label}-${index}`} item={item} />
                 ) : (
-                  <MealPlannerSlot key={`${label}-${index}`} />
+                  <MealPlannerSlot
+                    key={`${label}-${index}`}
+                    day={days[index].label}
+                    mealPeriod={label}
+                    onAddMeal={onAddMeal}
+                  />
                 ),
               )}
             </div>
