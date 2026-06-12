@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { mockMealPlan } from './mockMealPlan';
 
 /*
 Структура состояния meal plan:
@@ -19,25 +20,9 @@ import { createSlice } from '@reduxjs/toolkit';
 Значение null означает, что слот выбранного периода питания пока пуст.
 */
 
-// Создаёт независимую структуру пустого дня для каждого дня недели
-const createEmptyDay = () => ({
-  Breakfast: null,
-  Lunch: null,
-  Dinner: null,
-  Snack: null,
-});
-
-// Начальное состояние содержит пустой недельный план
+// Временно заполняем начальное состояние моковым планом в формате реального состояния
 const initialState = {
-  plan: {
-    Monday: createEmptyDay(),
-    Tuesday: createEmptyDay(),
-    Wednesday: createEmptyDay(),
-    Thursday: createEmptyDay(),
-    Friday: createEmptyDay(),
-    Saturday: createEmptyDay(),
-    Sunday: createEmptyDay(),
-  },
+  plan: mockMealPlan,
 };
 
 // Slice управляет добавлением и удалением рецептов в отдельных слотах календаря

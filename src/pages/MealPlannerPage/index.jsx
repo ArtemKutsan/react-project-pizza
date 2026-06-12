@@ -1,45 +1,31 @@
 // src/pages/MealPlannerPage/index.jsx
 import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { useRecipes } from '@/entities/recipe/model/useRecipes';
-import { filterRecipesByMealType } from '@/entities/recipe/lib';
 import { buildMealPlan } from '@/features/meal-planner/lib/buildMealPlan';
 import { mealPeriods } from '@/features/meal-planner/config/mealPeriods';
 import { getDays } from '@/features/meal-planner/model/days';
-import { mockMealPlanPatterns } from '@/features/meal-planner/model/mockMealPlan';
+import { selectMealPlan } from '@/features/meal-planner/model/selectors';
 import MealPlannerCalendar from '@/features/meal-planner/ui/MealPlannerCalendar';
 
 const MealPlannerPage = () => {
   // Получаем рецепты, статус загрузки и ошибку с помощью кастомного хука useRecipes
   const { recipes, status, error } = useRecipes();
+  // Получаем недельный план с ID рецептов из Redux store
+  const storedMealPlan = useSelector(selectMealPlan);
   // Получаем дни для календаря и мемоизируем результат, чтобы не пересчитывать при каждом рендере
   const days = useMemo(() => getDays(), []);
 
-  // Фильтруем рецепты по типу блюда (meal type) и мемоизируем результат, чтобы не пересчитывать при каждом рендере
-  const breakfastRecipes = useMemo(() => filterRecipesByMealType(recipes, 'Breakfast'), [recipes]);
-  // Фильтруем рецепты по типу блюда (meal type) и мемоизируем результат, чтобы не пересчитывать при каждом рендере
-  const lunchRecipes = useMemo(() => filterRecipesByMealType(recipes, 'Lunch'), [recipes]);
-  // Фильтруем рецепты по типу блюда (meal type) и мемоизируем результат, чтобы не пересчитывать при каждом рендере
-  const dinnerRecipes = useMemo(() => filterRecipesByMealType(recipes, 'Dinner'), [recipes]);
-  // Фильтруем рецепты по типу блюда (meal type) и мемоизируем результат, чтобы не пересчитывать при каждом рендере
-  const snackRecipes = useMemo(
-    () => filterRecipesByMealType(recipes, ['Snack', 'Snacks']),
-    [recipes],
-  );
-
-  // Строим план питания (meal plan) на основе отфильтрованных рецептов и мемоизируем результат, чтобы не пересчитывать при каждом рендере
+  // Соединяем ID из meal plan с полными объектами рецептов для отображения календаря
   const mealPlan = useMemo(
     () =>
       buildMealPlan({
+        days,
         mealPeriods,
-        recipesByMealType: {
-          Breakfast: breakfastRecipes,
-          Lunch: lunchRecipes,
-          Dinner: dinnerRecipes,
-          Snack: snackRecipes,
-        },
-        placement: mockMealPlanPatterns,
+        mealPlan: storedMealPlan,
+        recipes,
       }),
-    [breakfastRecipes, lunchRecipes, dinnerRecipes, snackRecipes],
+    [days, recipes, storedMealPlan],
   );
 
   if (status === 'idle' || status === 'loading') {
