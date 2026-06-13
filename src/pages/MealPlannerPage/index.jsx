@@ -7,9 +7,10 @@ import { mealPeriods } from '@/features/meal-planner/config/mealPeriods';
 import { getDays } from '@/features/meal-planner/model/days';
 import { selectMealPlan } from '@/features/meal-planner/model/selectors';
 import MealPlannerCalendar from '@/features/meal-planner/ui/MealPlannerCalendar';
-import { Modal } from '@/shared/ui';
+import MealRecipeModal from '@/features/meal-planner/ui/MealRecipeModal';
 
 const MealPlannerPage = () => {
+  // Храним координаты пустого слота, для которого пользователь открыл выбор рецепта
   const [selectedSlot, setSelectedSlot] = useState(null);
   // Получаем рецепты, статус загрузки и ошибку с помощью кастомного хука useRecipes
   const { recipes, status, error } = useRecipes();
@@ -44,12 +45,13 @@ const MealPlannerPage = () => {
         <h1 className="text-2xl font-semibold text-slate-900">Meal Planner</h1>
         <p className="mt-2 text-slate-500">Plan your meals for the week</p>
       </div>
+      {/* Пустой слот передаёт сюда day и mealPeriod через onAddMeal */}
       <MealPlannerCalendar days={days} rows={mealPlan} onAddMeal={setSelectedSlot} />
-      <Modal
-        isOpen={Boolean(selectedSlot)}
-        title={
-          selectedSlot ? `Add meal: ${selectedSlot.mealPeriod}, ${selectedSlot.day}` : 'Add meal'
-        }
+      {/* selectedSlot управляет открытием модалки и определяет тип отображаемых рецептов */}
+      {/* После закрытия очищаем выбранный слот, поэтому модалка перестаёт рендериться */}
+      <MealRecipeModal
+        selectedSlot={selectedSlot}
+        recipes={recipes}
         onClose={() => setSelectedSlot(null)}
       />
     </section>
