@@ -1,10 +1,12 @@
 import LikeIcon from '@/assets/icons/like.svg?react';
 import TrashIcon from '@/assets/icons/trash.svg?react';
 
-const MealPlannerCard = ({ item }) => {
+const MealPlannerCard = ({ item, day, mealPeriod }) => {
   return (
     <button
       type="button"
+      data-day={day}
+      data-meal-period={mealPeriod}
       className="group relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white text-left"
     >
       <img

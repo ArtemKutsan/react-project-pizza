@@ -37,7 +37,12 @@ const MealPlannerCalendar = ({ days, rows, onAddMeal }) => {
 
               {items.map((item, index) =>
                 item ? (
-                  <MealPlannerCard key={`${label}-${index}`} item={item} />
+                  <MealPlannerCard
+                    key={`${label}-${index}`}
+                    item={item}
+                    day={days[index].label}
+                    mealPeriod={label}
+                  />
                 ) : (
                   <MealPlannerSlot
                     key={`${label}-${index}`}
