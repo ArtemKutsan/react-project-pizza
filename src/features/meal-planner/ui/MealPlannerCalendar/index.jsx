@@ -42,6 +42,7 @@ const MealPlannerCalendar = ({ days, rows, onAddMeal }) => {
                     item={item}
                     day={days[index].label}
                     mealPeriod={label}
+                    onReplaceMeal={onAddMeal}
                   />
                 ) : (
                   <MealPlannerSlot

@@ -3,11 +3,15 @@ import { removeMeal } from '@/features/meal-planner/model/mealPlanSlice';
 import LikeIcon from '@/assets/icons/like.svg?react';
 import TrashIcon from '@/assets/icons/trash.svg?react';
 
-const MealPlannerCard = ({ item, day, mealPeriod }) => {
+const MealPlannerCard = ({ item, day, mealPeriod, onReplaceMeal }) => {
   const dispatch = useDispatch();
 
   const handleRemoveMeal = () => {
     dispatch(removeMeal({ day, mealPeriod }));
+  };
+
+  const handleReplaceMeal = () => {
+    onReplaceMeal({ day, mealPeriod });
   };
 
   return (
@@ -16,6 +20,12 @@ const MealPlannerCard = ({ item, day, mealPeriod }) => {
       data-meal-period={mealPeriod}
       className="group relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white text-left"
     >
+      <button
+        type="button"
+        onClick={handleReplaceMeal}
+        className="absolute inset-0 z-10 cursor-pointer"
+        aria-label={`Replace ${item.title} in ${day} ${mealPeriod}`}
+      />
       <img
         src={item.image}
         alt={item.title}
@@ -27,14 +37,14 @@ const MealPlannerCard = ({ item, day, mealPeriod }) => {
         </span>
       </div>
 
-      <div className="absolute z-10 bottom-0 inset-x-0 flex items-center justify-between gap-2 p-4 group-hover:bg-white">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-between gap-2 p-4 group-hover:bg-white">
         <span className="text-xs text-slate-500 group-hover:hidden">
           {item.caloriesPerServing} kcal
         </span>
         <button
           type="button"
           onClick={handleRemoveMeal}
-          className="hidden cursor-pointer group-hover:block"
+          className="pointer-events-auto hidden cursor-pointer group-hover:block"
           aria-label={`Remove ${item.title} from ${day} ${mealPeriod}`}
         >
           <TrashIcon className="size-4 text-slate-700" aria-hidden="true" />
