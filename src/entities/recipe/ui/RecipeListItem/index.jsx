@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { RouterPath } from '@/shared/config/routerConfig';
+import { RouterPath } from '@/shared/config/routerPaths';
 import { InfoLabel } from '@/shared/ui';
 import TimerIcon from '@/assets/icons/timer.svg?react';
 import FireIcon from '@/assets/icons/fire-line.svg?react';

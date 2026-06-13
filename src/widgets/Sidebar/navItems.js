@@ -1,5 +1,5 @@
 // src/widgets/Sidebar/navItems.js
-import { RouterPath } from '@/shared/config/routerConfig';
+import { RouterPath } from '@/shared/config/routerPaths';
 import HomeIcon from '@/assets/icons/home.svg?react';
 import CategoriesIcon from '@/assets/icons/categories.svg?react';
 import ListIcon from '@/assets/icons/list.svg?react';

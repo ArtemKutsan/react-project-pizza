@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { RouterPath } from '@/shared/config/routerConfig';
+import { RouterPath } from '@/shared/config/routerPaths';
 import { navItems } from '@/widgets/Sidebar/navItems';
 import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 
