@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createRecipe } from '@/entities/recipe/model/thunks';
+import { createRecipe } from '@/entities/recipe';
 
 const initialState = {
   status: 'idle',

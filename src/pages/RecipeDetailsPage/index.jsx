@@ -6,7 +6,7 @@ import ServingsIcon from '@/assets/icons/servings.svg?react';
 import UtensilsIcon from '@/assets/icons/utensils.svg?react';
 import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 import ListIcon from '@/assets/icons/list.svg?react';
-import { useRecipes } from '@/entities/recipe/model/useRecipes';
+import { useRecipes } from '@/entities/recipe';
 
 const RecipeDetailsPage = () => {
   const { id } = useParams();

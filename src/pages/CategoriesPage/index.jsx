@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useRecipes } from '@/entities/recipe/model/useRecipes';
+import { useRecipes } from '@/entities/recipe';
 import {
   filterRecipesByCuisine,
   filterRecipesByMealType,

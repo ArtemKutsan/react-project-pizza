@@ -1,5 +1,5 @@
 import { RecipeList } from '@/entities/recipe/ui';
-import { useRecipes } from '@/entities/recipe/model/useRecipes';
+import { useRecipes } from '@/entities/recipe';
 
 const RecipesPage = () => {
   const { recipes, status, error } = useRecipes();

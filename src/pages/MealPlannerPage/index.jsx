@@ -1,7 +1,7 @@
 // src/pages/MealPlannerPage/index.jsx
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useRecipes } from '@/entities/recipe/model/useRecipes';
+import { useRecipes } from '@/entities/recipe';
 import {
   buildMealPlan,
   getDays,

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { recipesReducer } from '@/entities/recipe/model/recipesSlice';
+import { recipesReducer } from '@/entities/recipe';
 import { addRecipeReducer } from '@/features/add-recipe';
 import { mealPlanReducer } from '@/features/meal-planner';
 

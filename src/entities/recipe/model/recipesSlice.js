@@ -1,6 +1,6 @@
 // src/entities/recipe/model/recipesSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchRecipes } from '@/entities/recipe/model/thunks';
+import { fetchRecipes } from './thunks';
 
 // Example recipe data structure
 /*

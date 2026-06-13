@@ -1,7 +1,7 @@
 // src/pages/AddRecipePage/index.jsx
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { createRecipe } from '@/entities/recipe/model/thunks';
+import { createRecipe } from '@/entities/recipe';
 import {
   RecipeForm,
   resetAddRecipeState,
