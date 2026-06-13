@@ -42,8 +42,8 @@ const RecipeDetailsPage = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-8 px-8 py-8">
-            <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-8 px-4 py-6 sm:px-8 sm:py-8">
+            <div className="flex flex-wrap items-center justify-between gap-4">
               <Badge>{recipe.difficulty}</Badge>
               <span className="inline-flex items-baseline gap-2 text-sm text-slate-700">
                 <span className="text-lg text-amber-400">★</span>
@@ -53,7 +53,7 @@ const RecipeDetailsPage = () => {
             </div>
 
             <div className="space-y-4">
-              <h1 className="max-w-xl text-4xl font-semibold tracking-tight text-slate-900 lg:text-5xl">
+              <h1 className="max-w-xl text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
                 {recipe.name}
               </h1>
               {/* Описание */}
@@ -80,7 +80,7 @@ const RecipeDetailsPage = () => {
           </div>
         </div>
 
-        <div className="grid gap-y-8 border-t border-slate-200 p-8 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="grid gap-y-8 border-t border-slate-200 p-4 sm:p-8 lg:grid-cols-[0.85fr_1.15fr]">
           <section className="border-slate-200 lg:border-r lg:pr-8">
             <div className="mb-6 flex items-baseline gap-2">
               <ChefHatIcon className="ml-1.5 size-5 text-lime-700" aria-hidden="true" />
@@ -98,7 +98,7 @@ const RecipeDetailsPage = () => {
           </section>
         </div>
 
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           <div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 text-slate-600">
             <span className="flex size-10 items-center justify-center rounded-full bg-emerald-50 text-lime-700">
               <ChefHatIcon className="size-5" aria-hidden="true" />
