@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addRecipe } from '@/entities/recipe/model/thunks';
+import { createRecipe } from '@/entities/recipe/model/thunks';
 
 const initialState = {
   status: 'idle',
@@ -17,14 +17,14 @@ const addRecipeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addRecipe.pending, (state) => {
+      .addCase(createRecipe.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(addRecipe.fulfilled, (state) => {
+      .addCase(createRecipe.fulfilled, (state) => {
         state.status = 'succeeded';
       })
-      .addCase(addRecipe.rejected, (state) => {
+      .addCase(createRecipe.rejected, (state) => {
         state.status = 'failed';
         state.error = 'Failed to create recipe';
       });

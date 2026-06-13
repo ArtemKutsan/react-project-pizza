@@ -1,7 +1,7 @@
 // src/pages/AddRecipePage/index.jsx
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { addRecipe } from '@/entities/recipe/model/thunks';
+import { createRecipe } from '@/entities/recipe/model/thunks';
 import {
   RecipeForm,
   resetAddRecipeState,
@@ -72,8 +72,8 @@ const AddRecipePage = () => {
 
     // Отправляем действие для создания рецепта и обрабатываем результат
     try {
-      // Диспетчеризуем действие addRecipe с данными нового рецепта и ожидаем его завершения, используя unwrap для получения результата или ошибки
-      const createdRecipe = await dispatch(addRecipe(nextRecipe)).unwrap();
+      // Диспетчеризуем createRecipe и через unwrap получаем созданный рецепт или ошибку
+      const createdRecipe = await dispatch(createRecipe(nextRecipe)).unwrap();
 
       console.log('DummyJSON recipe response:', createdRecipe);
       // Сбрасываем форму к начальному состоянию после успешного создания рецепта

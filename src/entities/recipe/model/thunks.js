@@ -10,7 +10,7 @@ export const fetchRecipes = createAsyncThunk('recipes/fetchRecipes', async () =>
 });
 
 // Асинхронный thunk для создания нового рецепта на сервере
-export const addRecipe = createAsyncThunk('recipes/addRecipe', async (recipe) => {
+export const createRecipe = createAsyncThunk('recipes/createRecipe', async (recipe) => {
   const { data } = await axios.post('https://dummyjson.com/recipes/add', recipe);
 
   return data;
