@@ -30,7 +30,7 @@ const RecipeListItem = ({ recipe }) => {
           </div>
         )}
 
-        <div className="flex min-w-0 flex-col justify-between gap-4 py-4">
+        <div className="flex min-w-0 flex-col justify-between gap-4 px-4 py-4 md:px-0">
           <div className="space-y-2">
             <h3 className="text-2xl font-semibold text-slate-900">
               {recipe?.name ?? 'RecipeListItem'}
@@ -50,7 +50,7 @@ const RecipeListItem = ({ recipe }) => {
           </div>
         </div>
 
-        <div className="flex items-start justify-between gap-4 py-4 pr-4 md:flex-col md:items-end">
+        <div className="flex items-start justify-end gap-4 py-4 pr-4 pl-4 md:flex-col md:items-end md:justify-start md:pl-0">
           <span className="rounded-full p-2 text-slate-700">
             <LikeIcon aria-hidden="true" className="size-5" />
           </span>
