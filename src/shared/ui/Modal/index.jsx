@@ -94,7 +94,7 @@ const Modal = ({ isOpen, title, children, className, onClose }) => {
           className,
         )}
       >
-        <header className="flex items-center justify-between gap-4 border-b border-slate-200 p-4">
+        <header className="flex items-center justify-between gap-4 border-b border-slate-200 p-4 bg-white">
           <h2 id={titleId} className="text-xl font-semibold text-slate-900">
             {title}
           </h2>
