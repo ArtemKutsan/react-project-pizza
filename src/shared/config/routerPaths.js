@@ -1,7 +1,7 @@
 // src/shared/config/routerPaths.js
 
 // Определение маршрутов приложения с помощью констант и конфигурационного объекта
-export const AppRouter = {
+export const AppRoute = {
   MAIN: 'main',
   RECIPES: 'recipes',
   CATEGORIES: 'categories',
@@ -13,11 +13,11 @@ export const AppRouter = {
 
 // Объект, который связывает каждую константу маршрута с его соответствующим маршрутом
 export const RouterPath = {
-  [AppRouter.MAIN]: '/',
-  [AppRouter.RECIPES]: '/recipes',
-  [AppRouter.CATEGORIES]: '/categories',
-  [AppRouter.ADD_RECIPE]: '/add-recipe',
-  [AppRouter.MEAL_PLANNER]: '/meal-planner',
-  [AppRouter.RECIPE_DETAIL]: '/recipes/:id',
-  [AppRouter.NOT_FOUND]: '*',
+  [AppRoute.MAIN]: '/',
+  [AppRoute.RECIPES]: '/recipes',
+  [AppRoute.CATEGORIES]: '/categories',
+  [AppRoute.ADD_RECIPE]: '/add-recipe',
+  [AppRoute.MEAL_PLANNER]: '/meal-planner',
+  [AppRoute.RECIPE_DETAIL]: '/recipes/:id',
+  [AppRoute.NOT_FOUND]: '*',
 };
