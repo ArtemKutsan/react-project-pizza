@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { filterRecipesByMealType } from '@/entities/recipe/lib';
+import { addMeal } from '@/features/meal-planner/model/mealPlanSlice';
 import { Modal } from '@/shared/ui';
 
 /*
@@ -24,6 +26,8 @@ selectedSlot:
 Компонент отвечает за фильтрацию и отображение подходящих рецептов.
 */
 const MealRecipeModal = ({ selectedSlot, recipes, onClose }) => {
+  const dispatch = useDispatch();
+
   // Пересчитываем список только при изменении рецептов или выбранного слота
   const filteredRecipes = useMemo(
     () =>
@@ -36,14 +40,29 @@ const MealRecipeModal = ({ selectedSlot, recipes, onClose }) => {
     ? `Add meal: ${selectedSlot.mealPeriod}, ${selectedSlot.day}`
     : 'Add meal';
 
+  // Записываем ID рецепта в выбранный слот Redux store и закрываем модалку
+  const handleSelectRecipe = (recipeId) => {
+    if (!selectedSlot) return;
+
+    dispatch(
+      addMeal({
+        ...selectedSlot,
+        recipeId,
+      }),
+    );
+    onClose();
+  };
+
   return (
     // Наличие selectedSlot одновременно означает, что пользователь выбрал слот и модалку нужно открыть
     <Modal isOpen={Boolean(selectedSlot)} title={title} onClose={onClose} className="bg-neutral-50">
       <div className="grid gap-4 sm:grid-cols-2">
         {filteredRecipes.map((recipe) => (
-          <article
+          <button
+            type="button"
             key={recipe.id}
-            className="flex items-center gap-4 rounded-2xl border border-slate-200 p-4 bg-white"
+            onClick={() => handleSelectRecipe(recipe.id)}
+            className="flex cursor-pointer items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 text-left"
           >
             <img
               src={recipe.image}
@@ -54,7 +73,7 @@ const MealRecipeModal = ({ selectedSlot, recipes, onClose }) => {
               <h3 className="line-clamp-2 text-sm font-medium text-slate-900">{recipe.name}</h3>
               <p className="mt-2 text-sm text-slate-500">{recipe.caloriesPerServing} kcal</p>
             </div>
-          </article>
+          </button>
         ))}
       </div>
     </Modal>
