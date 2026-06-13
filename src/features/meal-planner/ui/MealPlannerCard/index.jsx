@@ -1,10 +1,17 @@
+import { useDispatch } from 'react-redux';
+import { removeMeal } from '@/features/meal-planner/model/mealPlanSlice';
 import LikeIcon from '@/assets/icons/like.svg?react';
 import TrashIcon from '@/assets/icons/trash.svg?react';
 
 const MealPlannerCard = ({ item, day, mealPeriod }) => {
+  const dispatch = useDispatch();
+
+  const handleRemoveMeal = () => {
+    dispatch(removeMeal({ day, mealPeriod }));
+  };
+
   return (
-    <button
-      type="button"
+    <article
       data-day={day}
       data-meal-period={mealPeriod}
       className="group relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white text-left"
@@ -24,10 +31,17 @@ const MealPlannerCard = ({ item, day, mealPeriod }) => {
         <span className="text-xs text-slate-500 group-hover:hidden">
           {item.caloriesPerServing} kcal
         </span>
-        <TrashIcon className="hidden size-4 text-slate-700 group-hover:block" aria-hidden="true" />
+        <button
+          type="button"
+          onClick={handleRemoveMeal}
+          className="hidden cursor-pointer group-hover:block"
+          aria-label={`Remove ${item.title} from ${day} ${mealPeriod}`}
+        >
+          <TrashIcon className="size-4 text-slate-700" aria-hidden="true" />
+        </button>
         <LikeIcon className="size-4 text-slate-700" aria-hidden="true" />
       </div>
-    </button>
+    </article>
   );
 };
 
