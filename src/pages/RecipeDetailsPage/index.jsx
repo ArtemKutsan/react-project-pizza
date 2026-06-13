@@ -8,7 +8,7 @@ import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 import ListIcon from '@/assets/icons/list.svg?react';
 import { useRecipes } from '@/entities/recipe/model/useRecipes';
 
-const RecipePageDetail = () => {
+const RecipeDetailsPage = () => {
   const { id } = useParams();
   const { recipes, status, error } = useRecipes();
   const recipe = recipes.find((item) => String(item.id) === String(id));
@@ -111,4 +111,4 @@ const RecipePageDetail = () => {
   );
 };
 
-export default RecipePageDetail;
+export default RecipeDetailsPage;

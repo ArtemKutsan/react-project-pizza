@@ -3,7 +3,7 @@ import RecipesPage from '@/pages/RecipesPage';
 import CategoriesPage from '@/pages/CategoriesPage';
 import AddRecipePage from '@/pages/AddRecipePage';
 import MealPlannerPage from '@/pages/MealPlannerPage';
-import RecipePageDetail from '@/pages/RecipePageDetails';
+import RecipeDetailsPage from '@/pages/RecipeDetailsPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { AppRouter, RouterPath } from '@/shared/config/routerPaths';
 
@@ -31,7 +31,7 @@ export const routeConfig = {
   },
   [AppRouter.RECIPE_DETAIL]: {
     path: RouterPath.recipe_detail,
-    element: <RecipePageDetail />,
+    element: <RecipeDetailsPage />,
   },
   [AppRouter.NOT_FOUND]: {
     path: RouterPath.not_found,
