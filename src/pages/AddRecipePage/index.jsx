@@ -2,9 +2,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { addRecipe } from '@/entities/recipe/model/thunks';
-import { RecipeForm } from '@/features/add-recipe';
-import { resetAddRecipeState } from '@/features/add-recipe/model/addRecipeSlice';
-import { selectAddRecipeError, selectAddRecipeStatus } from '@/features/add-recipe/model/selectors';
+import {
+  RecipeForm,
+  resetAddRecipeState,
+  selectAddRecipeError,
+  selectAddRecipeStatus,
+} from '@/features/add-recipe';
 
 // Начальное состояние формы для создания нового рецепта
 const initialFormValues = {
