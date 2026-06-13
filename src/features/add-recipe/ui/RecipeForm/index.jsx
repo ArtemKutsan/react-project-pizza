@@ -70,7 +70,7 @@ const RecipeForm = ({ register, handleSubmit, onSubmit, message, isSubmitting })
       />
     </div>
 
-    <div className="mt-6 flex items-center justify-between gap-4">
+    <div className="mt-6 flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
       <p className="text-sm text-lime-700">{message}</p>
       <Button type="submit" disabled={isSubmitting}>
         Add recipe
