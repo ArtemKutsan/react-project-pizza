@@ -2,12 +2,14 @@
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRecipes } from '@/entities/recipe/model/useRecipes';
-import { buildMealPlan } from '@/features/meal-planner/lib/buildMealPlan';
-import { mealPeriods } from '@/features/meal-planner/config/mealPeriods';
-import { getDays } from '@/features/meal-planner/model/days';
-import { selectMealPlan } from '@/features/meal-planner/model/selectors';
-import MealPlannerCalendar from '@/features/meal-planner/ui/MealPlannerCalendar';
-import MealRecipeModal from '@/features/meal-planner/ui/MealRecipeModal';
+import {
+  buildMealPlan,
+  getDays,
+  mealPeriods,
+  MealPlannerCalendar,
+  MealRecipeModal,
+  selectMealPlan,
+} from '@/features/meal-planner';
 
 const MealPlannerPage = () => {
   // Храним координаты пустого слота, для которого пользователь открыл выбор рецепта
