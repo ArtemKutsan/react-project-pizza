@@ -94,14 +94,14 @@ const Modal = ({ isOpen, title, children, className, onClose }) => {
           className,
         )}
       >
-        <header className="flex items-center justify-between gap-4 border-b border-slate-200 p-4 bg-white">
+        <header className="flex items-start justify-between gap-4 border-b border-slate-200 p-4 bg-white">
           <h2 id={titleId} className="text-xl font-semibold text-slate-900">
             {title}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="flex size-8 items-center justify-center rounded-lg text-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+            className="flex size-8 shrink-0 items-center justify-center rounded-lg text-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900"
             aria-label="Close modal"
           >
             ×
