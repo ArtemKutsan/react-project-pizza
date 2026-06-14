@@ -64,11 +64,23 @@ const RecipeDetailsPage = () => {
             </div>
 
             <div className="grid gap-6 border-y border-slate-200 py-6 sm:grid-cols-2 md:grid-cols-3">
-              <InfoLabel icon={TimerIcon} label="Prep Time" value={`${recipe.prepTimeMinutes} mins`} />
-              <InfoLabel icon={TimerIcon} label="Cook Time" value={`${recipe.cookTimeMinutes} mins`} />
+              <InfoLabel
+                icon={TimerIcon}
+                label="Prep Time"
+                value={`${recipe.prepTimeMinutes} mins`}
+              />
+              <InfoLabel
+                icon={TimerIcon}
+                label="Cook Time"
+                value={`${recipe.cookTimeMinutes} mins`}
+              />
               <InfoLabel icon={ServingsIcon} label="Servings" value={recipe.servings} />
               <InfoLabel icon={ChefHatIcon} label="Cuisine" value={recipe.cuisine} />
-              <InfoLabel icon={FireIcon} label="Calories" value={`${recipe.caloriesPerServing} kcal`} />
+              <InfoLabel
+                icon={FireIcon}
+                label="Calories"
+                value={`${recipe.caloriesPerServing} kcal`}
+              />
               <InfoLabel icon={UtensilsIcon} label="Meal Type" value={mealTypes.join(', ')} />
             </div>
 
@@ -82,16 +94,16 @@ const RecipeDetailsPage = () => {
 
         <div className="grid gap-y-8 border-t border-slate-200 p-4 sm:p-8 lg:grid-cols-[0.85fr_1.15fr]">
           <section className="border-slate-200 lg:border-r lg:pr-8">
-            <div className="mb-6 flex items-baseline gap-2">
-              <ChefHatIcon className="ml-1.5 size-5 text-lime-700" aria-hidden="true" />
+            <div className="mb-6 flex items-center gap-2">
+              <ChefHatIcon className="ml-1 size-6 text-lime-700" aria-hidden="true" />
               <h2 className="text-2xl font-semibold text-slate-900">Ingredients</h2>
             </div>
             <BulletList items={ingredients} />
           </section>
 
           <section className="border-slate-200 lg:pl-8">
-            <div className="mb-6 flex items-baseline gap-2">
-              <ListIcon className="ml-1.5 size-5 text-lime-700" aria-hidden="true" />
+            <div className="mb-6 flex items-center gap-2">
+              <ListIcon className="ml-1 size-6 text-lime-700" aria-hidden="true" />
               <h2 className="text-2xl font-semibold text-slate-900">Instructions</h2>
             </div>
             <NumberedList items={instructions} />
