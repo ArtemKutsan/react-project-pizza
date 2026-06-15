@@ -1,17 +1,10 @@
 // src/entities/recipe/model/thunks.js
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { getRecipes } from '../api/getRecipes';
+import { createRecipeRequest } from '../api/createRecipe';
 
 // Асинхронный thunk для загрузки рецептов с сервера
-export const fetchRecipes = createAsyncThunk('recipes/fetchRecipes', async () => {
-  const { data } = await axios.get('https://dummyjson.com/recipes');
-
-  return data.recipes;
-});
+export const fetchRecipes = createAsyncThunk('recipes/fetchRecipes', getRecipes);
 
 // Асинхронный thunk для создания нового рецепта на сервере
-export const createRecipe = createAsyncThunk('recipes/createRecipe', async (recipe) => {
-  const { data } = await axios.post('https://dummyjson.com/recipes/add', recipe);
-
-  return data;
-});
+export const createRecipe = createAsyncThunk('recipes/createRecipe', createRecipeRequest);
