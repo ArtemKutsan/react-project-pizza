@@ -3,6 +3,7 @@ import RecipesPage from '@/pages/RecipesPage';
 import CategoriesPage from '@/pages/CategoriesPage';
 import AddRecipePage from '@/pages/AddRecipePage';
 import MealPlannerPage from '@/pages/MealPlannerPage';
+import ProfilePage from '@/pages/ProfilePage';
 import RecipeDetailsPage from '@/pages/RecipeDetailsPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { AppRoute, RouterPath } from '@/shared/config/routerPaths';
@@ -28,6 +29,10 @@ export const routeConfig = {
   [AppRoute.MEAL_PLANNER]: {
     path: RouterPath.meal_planner,
     element: <MealPlannerPage />,
+  },
+  [AppRoute.PROFILE]: {
+    path: RouterPath.profile,
+    element: <ProfilePage />,
   },
   [AppRoute.RECIPE_DETAIL]: {
     path: RouterPath.recipe_detail,

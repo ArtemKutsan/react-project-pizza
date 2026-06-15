@@ -7,6 +7,7 @@ export const AppRoute = {
   CATEGORIES: 'categories',
   ADD_RECIPE: 'add_recipe',
   MEAL_PLANNER: 'meal_planner',
+  PROFILE: 'profile',
   RECIPE_DETAIL: 'recipe_detail',
   NOT_FOUND: 'not_found',
 };
@@ -18,6 +19,7 @@ export const RouterPath = {
   [AppRoute.CATEGORIES]: '/categories',
   [AppRoute.ADD_RECIPE]: '/add-recipe',
   [AppRoute.MEAL_PLANNER]: '/meal-planner',
+  [AppRoute.PROFILE]: '/profile',
   [AppRoute.RECIPE_DETAIL]: '/recipes/:id',
   [AppRoute.NOT_FOUND]: '*',
 };
