@@ -34,6 +34,10 @@ export const routeConfig = {
     path: RouterPath.profile,
     element: <ProfilePage />,
   },
+  [AppRoute.USER_PROFILE]: {
+    path: RouterPath.user_profile,
+    element: <ProfilePage />,
+  },
   [AppRoute.RECIPE_DETAIL]: {
     path: RouterPath.recipe_detail,
     element: <RecipeDetailsPage />,

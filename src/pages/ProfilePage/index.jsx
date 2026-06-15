@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   fetchUserById,
   selectUserById,
@@ -9,16 +10,19 @@ import {
 import { DEV_USER_ID } from '@/shared/config/devUser';
 
 const ProfilePage = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector((state) => selectUserById(state, DEV_USER_ID));
+  const userId = id ?? DEV_USER_ID;
+  const user = useSelector((state) => selectUserById(state, userId));
   const status = useSelector(selectUsersStatus);
   const error = useSelector(selectUsersError);
+  const isCurrentUserProfile = !id;
 
   useEffect(() => {
-    if (!user && status === 'idle') {
-      dispatch(fetchUserById(DEV_USER_ID));
+    if (!user && status !== 'loading') {
+      dispatch(fetchUserById(userId));
     }
-  }, [dispatch, status, user]);
+  }, [dispatch, status, user, userId]);
 
   if (status === 'idle' || status === 'loading') return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -28,7 +32,9 @@ const ProfilePage = () => {
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Profile</h1>
-        <p className="text-slate-500">Your RecipeBox account.</p>
+        <p className="text-slate-500">
+          {isCurrentUserProfile ? 'Your RecipeBox account.' : 'Public RecipeBox profile.'}
+        </p>
       </header>
 
       <div className="flex items-center gap-6 rounded-2xl border border-slate-200 p-6">
