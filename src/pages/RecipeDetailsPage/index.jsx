@@ -1,4 +1,6 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Badge, BulletList, InfoLabel, NumberedList } from '@/shared/ui';
 import TimerIcon from '@/assets/icons/timer.svg?react';
 import FireIcon from '@/assets/icons/fire-line.svg?react';
@@ -7,11 +9,22 @@ import UtensilsIcon from '@/assets/icons/utensils.svg?react';
 import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 import ListIcon from '@/assets/icons/list.svg?react';
 import { useRecipes } from '@/entities/recipe';
+import { fetchUserById, selectUserById, selectUsersStatus } from '@/entities/user';
 
 const RecipeDetailsPage = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const { recipes, status, error } = useRecipes();
   const recipe = recipes.find((item) => String(item.id) === String(id));
+  const authorId = recipe?.userId;
+  const author = useSelector((state) => selectUserById(state, authorId));
+  const usersStatus = useSelector(selectUsersStatus);
+
+  useEffect(() => {
+    if (authorId && !author && usersStatus !== 'loading') {
+      dispatch(fetchUserById(authorId));
+    }
+  }, [author, authorId, dispatch, usersStatus]);
 
   if (status === 'idle' || status === 'loading') {
     return <p>Loading...</p>;
@@ -61,6 +74,24 @@ const RecipeDetailsPage = () => {
                 {recipe?.description ??
                   `A simple and delicious ${recipe?.cuisine?.toLowerCase() || 'cuisine'} classic with fresh ingredients.`}
               </p>
+              {author && (
+                <Link
+                  to={`/users/${author.id}`}
+                  className="inline-flex items-center gap-3 self-start rounded-2xl border border-slate-200 px-4 py-3 transition-colors hover:border-slate-300 hover:bg-slate-50"
+                >
+                  <img
+                    src={author.image}
+                    alt={`${author.firstName} ${author.lastName}`}
+                    className="size-10 rounded-full object-cover"
+                  />
+                  <span className="flex flex-col">
+                    <span className="text-sm font-semibold text-slate-900">
+                      {author.firstName} {author.lastName}
+                    </span>
+                    <span className="text-xs text-slate-500">@{author.username}</span>
+                  </span>
+                </Link>
+              )}
             </div>
 
             <div className="grid gap-6 border-y border-slate-200 py-6 sm:grid-cols-2 md:grid-cols-3">
