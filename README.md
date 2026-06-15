@@ -1,180 +1,252 @@
-# React + Vite — FSD Architecture
+# RecipeBox
 
-## Структура проекта
+Учебное SPA-приложение для просмотра рецептов, фильтрации по категориям, создания рецептов и составления недельного плана питания.
 
-Проект следует методологии Feature-Sliced Design (FSD). Исходный код находится в `src/` и разделён на слои.
+## Стек
 
+- React 19
+- Vite 8
+- React Router DOM 7
+- Redux Toolkit и React Redux
+- React Hook Form
+- Axios
+- Tailwind CSS 4
+- `clsx` и `tailwind-merge`
+- SVGR
+
+Данные рецептов загружаются из [DummyJSON Recipes API](https://dummyjson.com/docs/recipes).
+
+## Возможности
+
+- просмотр списка рецептов;
+- переход на страницу подробной информации о рецепте;
+- фильтрация рецептов по типу блюда и кухне;
+- отправка формы создания рецепта в DummyJSON;
+- недельный Meal Planner;
+- добавление, замена и удаление рецептов в слотах Meal Planner;
+- адаптивная вёрстка основных страниц;
+- общие UI-компоненты и публичные API FSD-слайсов.
+
+## Запуск
+
+```bash
+npm install
+npm run dev
 ```
+
+Другие команды:
+
+```bash
+npm run lint
+npm run build
+npm run preview
+```
+
+Dev-сервер Vite доступен в локальной сети благодаря параметру `host`.
+
+## Маршруты
+
+| Путь | Страница |
+| --- | --- |
+| `/` | `MainPage` |
+| `/recipes` | `RecipesPage` |
+| `/recipes/:id` | `RecipeDetailsPage` |
+| `/categories` | `CategoriesPage` |
+| `/add-recipe` | `AddRecipePage` |
+| `/meal-planner` | `MealPlannerPage` |
+| `*` | `NotFoundPage` |
+
+Маршрутизация разделена по ответственности:
+
+- `src/shared/config/routerPaths.js` — ключи `AppRoute` и общие URL-пути `RouterPath`;
+- `src/app/providers/router/routeConfig.jsx` — связь путей с компонентами страниц;
+- `src/app/providers/router/AppRouter.jsx` — генерация компонентов `<Route>`.
+
+Так `shared` не зависит от верхнего слоя `pages`, а страницы подключаются на уровне `app`.
+
+## Архитектура
+
+Проект следует принципам Feature-Sliced Design:
+
+```text
 src/
-  app/          — инициализация приложения, провайдеры, глобальные стили
-  pages/        — страницы приложения
-  widgets/      — самостоятельные крупные блоки UI
-  shared/       — переиспользуемые утилиты, UI-компоненты, конфигурации
+├── app/        # инициализация, store, router, глобальные стили
+├── pages/      # страницы приложения
+├── widgets/    # крупные самостоятельные блоки интерфейса
+├── features/   # пользовательские сценарии
+├── entities/   # бизнес-сущности
+├── shared/     # универсальные UI, конфигурация и утилиты
+└── assets/     # изображения и SVG-иконки
 ```
 
-### Слои и их ответственность
+Направление зависимостей:
 
-**app** — точка входа. Содержит корневой компонент `App`, провайдер роутера `AppRouter` и глобальные стили. Слой ни от кого не зависит снизу, он сам оркестрирует остальные части.
+```text
+app → pages → widgets/features → entities → shared
+```
 
-**pages** — по одной папке на страницу. Каждая страница — изолированный компонент, не знающий о других страницах. Текущие страницы:
+Нижние слои не должны импортировать верхние.
 
-- `MainPage` — главная
-- `RecipesPage` — список рецептов (загружает данные из API)
-- `RecipePageDetail` — детальный вид рецепта по `id`
-- `NotFoundPage` — заглушка для несуществующих маршрутов
+### App
 
-**widgets** — крупные независимые блоки интерфейса, встраиваемые в `app` или `pages`. Единственный виджет — `Sidebar`, который рендерит навигационное меню.
+- `App.jsx` — общий layout с Sidebar и контентной областью;
+- `providers/router` — конфигурация и рендеринг маршрутов;
+- `providers/store` — корневой Redux store;
+- `styles` — глобальные стили и подключение Tailwind CSS.
 
-**shared** — код без привязки к бизнес-логике. Содержит:
+### Pages
 
-- `shared/config/routerConfig.jsx` — декларация всех маршрутов
-- `shared/ui/PageLoader.jsx` — компонент индикатора загрузки
+- `MainPage`;
+- `RecipesPage`;
+- `RecipeDetailsPage`;
+- `CategoriesPage`;
+- `AddRecipePage`;
+- `MealPlannerPage`;
+- `NotFoundPage`.
 
----
+### Widgets
 
-## routerConfig
+- `Sidebar` — навигация приложения.
 
-Файл: [src/shared/config/routerConfig.jsx](src/shared/config/routerConfig.jsx)
+### Features
 
-Весь роутинг описан в одном месте тремя связанными объектами.
+#### `add-recipe`
 
-### AppRouter
+Содержит форму создания рецепта, состояние отправки и селекторы статуса.
+
+Публичный API:
 
 ```js
-export const AppRouter = {
-  MAIN: 'main',
-  RECIPE: 'recipe',
-  RECIPE_DETAIL: 'recipe_detail',
-  NOT_FOUND: 'not_found',
-};
+import {
+  RecipeForm,
+  addRecipeReducer,
+  resetAddRecipeState,
+  selectAddRecipeError,
+  selectAddRecipeStatus,
+} from '@/features/add-recipe';
 ```
 
-Перечисление-ключей. Служит единственным источником правды для имён маршрутов. Используется как ключ при обращении к `RouterPath` и `routeConfig`, чтобы исключить опечатки в строках.
+#### `recipe-categorization`
 
-### RouterPath
+Содержит UI и конфигурацию выбора типа блюда и кухни.
+
+#### `meal-planner`
+
+Содержит недельный календарь, модальное окно выбора рецепта, Redux slice и сборщик данных для UI.
+
+В Redux хранится только идентификатор рецепта:
 
 ```js
-export const RouterPath = {
-  [AppRouter.MAIN]: '/',
-  [AppRouter.RECIPE]: '/recipe',
-  [AppRouter.RECIPE_DETAIL]: '/recipe/:id',
-  [AppRouter.NOT_FOUND]: '*',
-};
+{
+  plan: {
+    Monday: {
+      Breakfast: 21,
+      Lunch: null,
+      Dinner: 1,
+      Snack: null,
+    },
+  },
+}
 ```
 
-Маппинг ключ → URL-путь. Компоненты, которым нужно сформировать ссылку, импортируют `RouterPath` и подставляют нужный ключ:
+Полные объекты рецептов остаются в `entities/recipe`.
+
+### Entities
+
+`entities/recipe` отвечает за:
+
+- загрузку рецептов;
+- хранение списка в Redux;
+- селекторы и хук `useRecipes`;
+- создание рецепта через API;
+- компоненты `RecipeList` и `RecipeListItem`;
+- функции фильтрации и группировки.
+
+Внешние слои используют публичный API:
 
 ```js
-// Sidebar/index.jsx
-<Link to={RouterPath.main}>Main</Link>
-
-// RecipesPage.jsx
-<Link to={RouterPath.recipe_detail.replace(":id", recipe.id)}>
+import { createRecipe, recipesReducer, useRecipes } from '@/entities/recipe';
 ```
 
-Это означает, что если URL маршрута изменится, достаточно поправить `RouterPath` — все `Link` подхватят изменение автоматически.
+### Shared
 
-### routeConfig
+Содержит:
+
+- `Button`;
+- `Modal`;
+- `FormField`;
+- `InfoLabel`;
+- `Badge`;
+- `BulletList`;
+- `NumberedList`;
+- `PageLoader`;
+- helper `cn`;
+- общие пути маршрутов.
+
+## Redux
+
+Store содержит три части состояния:
 
 ```js
-export const routeConfig = {
-  [AppRouter.MAIN]: {
-    path: RouterPath.main,
-    element: <MainPage />,
-  },
-  [AppRouter.RECIPE]: {
-    path: RouterPath.recipe,
-    element: <RecipesPage />,
-  },
-  [AppRouter.RECIPE_DETAIL]: {
-    path: RouterPath.recipe_detail,
-    element: <RecipePageDetail />,
-  },
-  [AppRouter.NOT_FOUND]: {
-    path: RouterPath.not_found,
-    element: <NotFoundPage />,
-  },
-};
+{
+  recipes,
+  addRecipe,
+  mealPlan,
+}
 ```
 
-Полная декларация маршрутов: путь и соответствующий компонент страницы. Объект потребляется `AppRouter`-провайдером для динамической генерации `<Route>`.
+### Recipes
 
----
+`useRecipes` запускает `fetchRecipes`, если статус списка равен `idle`, и возвращает:
 
-## AppRouter (провайдер)
+```js
+{
+  recipes,
+  status,
+  error,
+}
+```
 
-Файл: [src/app/providers/router/AppRouter.jsx](src/app/providers/router/AppRouter.jsx)
+### Add Recipe
+
+Форма использует React Hook Form. `createRecipe` отправляет POST-запрос:
+
+```text
+POST https://dummyjson.com/recipes/add
+```
+
+DummyJSON имитирует создание и возвращает объект рецепта, но не сохраняет его в постоянной базе.
+
+### Meal Planner
+
+Meal Planner использует обычный Redux slice:
+
+- `addMeal` добавляет или заменяет `recipeId`;
+- `removeMeal` устанавливает слот в `null`.
+
+Сейчас начальное состояние временно заполняется данными из `mockMealPlan.js`. После перезагрузки пользовательские изменения сбрасываются.
+
+## Импорты
+
+В Vite настроен alias:
+
+```js
+import { Button } from '@/shared/ui';
+```
+
+SVG можно импортировать как React-компоненты:
 
 ```jsx
-const AppRouter = () => {
-  const renderWithWrapper = (route) => {
-    const element = <Suspense fallback={<PageLoader />}>{route.element}</Suspense>;
-    return <Route key={route.path} path={route.path} element={element} />;
-  };
+import TimerIcon from '@/assets/icons/timer.svg?react';
 
-  return <Routes>{Object.values(routeConfig).map(renderWithWrapper)}</Routes>;
-};
+<TimerIcon aria-hidden="true" />
 ```
 
-Компонент берёт все значения из `routeConfig`, обходит их через `map` и для каждого маршрута:
+## Текущие ограничения
 
-1. Оборачивает элемент страницы в `<Suspense>` с фоллбэком `<PageLoader />`. Это позволяет подключать `React.lazy`-загрузку страниц без изменения этого компонента — он уже готов к lazy imports.
-2. Рендерит `<Route path={...} element={...} />` с ключом по пути.
-
-Итоговый `<Routes>` передаётся напрямую в `App`.
-
-Пример итогового `<Routes>`:
-
-```js
-<Routes>
-  <Route
-    path="/"
-    element={
-      <Suspense fallback={<PageLoader />}>
-        <MainPage />
-      </Suspense>
-    }
-  />
-  <Route
-    path="/recipe"
-    element={
-      <Suspense fallback={<PageLoader />}>
-        <RecipesPage />
-      </Suspense>
-    }
-  />
-  <Route
-    path="/recipe/:id"
-    element={
-      <Suspense fallback={<PageLoader />}>
-        <RecipePageDetail />
-      </Suspense>
-    }
-  />
-  <Route
-    path="*"
-    element={
-      <Suspense fallback={<PageLoader />}>
-        <NotFoundPage />
-      </Suspense>
-    }
-  />
-</Routes>
-```
-
----
-
-## Поток инициализации
-
-```
-main.jsx
-  BrowserRouter           — предоставляет контекст роутера
-    App
-      Sidebar             — навигация, использует RouterPath для ссылок
-      AppRouter           — читает routeConfig, рендерит Routes
-        Suspense
-          <страница>      — рендерится по совпавшему маршруту
-```
-
-`BrowserRouter` оборачивает всё приложение на уровне `main.jsx`, поэтому и `Sidebar`, и `AppRouter`
-имеют доступ к контексту роутера.
+- DummyJSON не сохраняет созданные рецепты;
+- Meal Planner пока не сохраняется в `localStorage` или на сервере;
+- начальный Meal Planner использует временные mock-данные;
+- `MainPage` и `NotFoundPage` пока содержат минимальные заглушки;
+- список рецептов загружается целиком, без пагинации;
+- RTK Query пока не используется.
