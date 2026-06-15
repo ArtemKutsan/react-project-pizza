@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { RecipeList } from '@/entities/recipe/ui';
+import { useRecipes } from '@/entities/recipe';
 import {
   fetchUserById,
   selectUserById,
@@ -16,7 +18,12 @@ const ProfilePage = () => {
   const user = useSelector((state) => selectUserById(state, userId));
   const status = useSelector(selectUsersStatus);
   const error = useSelector(selectUsersError);
+  const { recipes, status: recipesStatus, error: recipesError } = useRecipes();
   const isCurrentUserProfile = !id;
+  const authoredRecipes = useMemo(
+    () => recipes.filter((recipe) => String(recipe.userId) === String(userId)),
+    [recipes, userId],
+  );
 
   useEffect(() => {
     if (!user && status !== 'loading') {
@@ -52,6 +59,31 @@ const ProfilePage = () => {
           <span className="text-sm text-slate-500">{user.email}</span>
         </div>
       </div>
+
+      <section className="flex flex-col gap-4">
+        <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-xl font-semibold tracking-tight text-slate-900">
+              Recipes by {user.firstName}
+            </h2>
+            <p className="text-sm text-slate-500">
+              {authoredRecipes.length} {authoredRecipes.length === 1 ? 'recipe' : 'recipes'}
+            </p>
+          </div>
+        </div>
+
+        {recipesStatus === 'idle' || recipesStatus === 'loading' ? (
+          <p className="text-sm text-slate-500">Loading recipes...</p>
+        ) : recipesError ? (
+          <p className="text-sm text-slate-500">{recipesError}</p>
+        ) : authoredRecipes.length > 0 ? (
+          <RecipeList recipes={authoredRecipes} />
+        ) : (
+          <div className="rounded-2xl border border-dashed border-slate-200 p-6 text-sm text-slate-500">
+            No recipes published yet.
+          </div>
+        )}
+      </section>
     </section>
   );
 };
