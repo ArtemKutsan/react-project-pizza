@@ -1,5 +1,5 @@
 /**
- * useRecipes – кастомный хук для работы с рецептами.
+ * useRecipes — кастомный хук для работы с рецептами.
  *
  * Возвращает:
  * - recipes — список рецептов из Redux store
@@ -7,8 +7,8 @@
  * - error — текст ошибки, если загрузка не удалась
  *
  * Поведение:
- * - При первом рендере, если статус 'idle', автоматически отправляет fetchRecipes()
- * - Следит за обновлением данных через селекторы
+ * - Без queryParams загружает рецепты один раз при первом рендере, если статус 'idle'
+ * - С queryParams перезапрашивает рецепты при изменении query
  *
  * Использование:
  * const { recipes, status, error } = useRecipes();
@@ -19,24 +19,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectRecipes, selectRecipesError, selectRecipesStatus } from './selectors';
 import { fetchRecipes } from './thunks';
 
-// Кастомный хук для получения рецептов из Redux store и управления их состоянием загрузки и ошибок
-export const useRecipes = () => {
-  // Получаем dispatch функцию для отправки действий в Redux store
+// Хук сущности для загрузки рецептов и подписки на store.
+export const useRecipes = (queryParams = null) => {
   const dispatch = useDispatch();
-  // Получаем рецепты, статус загрузки и ошибку из Redux store с помощью селекторов
   const recipes = useSelector(selectRecipes);
   const status = useSelector(selectRecipesStatus);
   const error = useSelector(selectRecipesError);
+  const queryKey = JSON.stringify(queryParams ?? {});
+  const hasQueryParams = queryParams !== null && Object.keys(queryParams).length > 0;
 
-  // Используем useEffect для загрузки рецептов при монтировании компонента, если статус загрузки - 'idle'
   useEffect(() => {
-    // Если статус загрузки - 'idle', отправляем действие для загрузки рецептов
-    if (status === 'idle') {
-      // Отправляем действие для загрузки рецептов в Redux store
-      dispatch(fetchRecipes());
-    }
-  }, [dispatch, status]);
+    // Загрузка по query для экранов поиска и сортировки.
+    if (!hasQueryParams) return;
 
-  // Возвращаем рецепты, статус загрузки и ошибку для использования в компонентах, которые используют этот хук
+    dispatch(fetchRecipes(queryParams));
+  }, [dispatch, hasQueryParams, queryKey, queryParams]);
+
+  useEffect(() => {
+    // Первичная загрузка для экранов, которые читают общий список рецептов.
+    if (hasQueryParams || status !== 'idle') return;
+
+    dispatch(fetchRecipes());
+  }, [dispatch, hasQueryParams, status]);
+
   return { recipes, status, error };
 };
