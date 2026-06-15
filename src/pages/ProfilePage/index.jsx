@@ -35,6 +35,34 @@ const ProfilePage = () => {
   if (error) return <p>{error}</p>;
   if (!user) return <p>User not found.</p>;
 
+  const profileStats = [
+    { label: 'Recipes', value: authoredRecipes.length },
+    { label: 'Favorites', value: 0 },
+    { label: 'Comments', value: 0 },
+  ];
+  const profileDetails = [
+    { label: 'Role', value: user.role || 'Member' },
+    { label: 'Age', value: user.age ? `${user.age}` : '—' },
+    { label: 'Gender', value: user.gender || '—' },
+    {
+      label: 'Location',
+      value:
+        user.location?.city && user.location?.country
+          ? `${user.location.city}, ${user.location.country}`
+          : user.location?.city || user.location?.country || '—',
+    },
+    { label: 'Education', value: user.education || '—' },
+    {
+      label: 'Work',
+      value: user.work?.company
+        ? `${user.work.title}${user.work.department ? ` · ${user.work.department}` : ''} @ ${
+            user.work.company
+          }`
+        : '—',
+    },
+    { label: 'Contact', value: user.phone || user.email },
+  ];
+
   return (
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
       <header className="flex flex-col gap-2">
@@ -59,6 +87,37 @@ const ProfilePage = () => {
           <span className="text-sm text-slate-500">{user.email}</span>
         </div>
       </div>
+
+      <section className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {profileStats.map((stat) => (
+            <div key={stat.label} className="rounded-2xl border border-slate-200 p-4">
+              <div className="text-sm text-slate-500">{stat.label}</div>
+              <div className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
+                {stat.value}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 p-4">
+          <div className="text-sm text-slate-500">About</div>
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            {isCurrentUserProfile
+              ? 'This is your RecipeBox profile. Share recipes, save favorites, and join the discussion.'
+              : `${user.firstName} shares recipes on RecipeBox and builds a public profile around their cooking.`}
+          </p>
+        </div>
+      </section>
+
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {profileDetails.map((detail) => (
+          <div key={detail.label} className="rounded-2xl border border-slate-200 p-4">
+            <div className="text-sm text-slate-500">{detail.label}</div>
+            <div className="mt-2 text-sm font-medium text-slate-900">{detail.value}</div>
+          </div>
+        ))}
+      </section>
 
       <section className="flex flex-col gap-4">
         <div className="flex items-end justify-between gap-4">
