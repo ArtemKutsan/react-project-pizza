@@ -1,20 +1,143 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Onest Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/onest/onest-latin-wght.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Onest Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/onest/onest-variable-font-wght.ttf') format('truetype');
+}
+
+:root {
+  --h: 260;
+  --c: 0.025;
+
+  --color-50: oklch(0.985 calc(var(--c) * 0.16) calc(var(--h) - 10));
+  --color-100: oklch(0.97 calc(var(--c) * 0.24) calc(var(--h) - 10));
+  --color-200: oklch(0.922 calc(var(--c) * 0.42) calc(var(--h) - 3));
+  --color-300: oklch(0.87 calc(var(--c) * 0.7) calc(var(--h) - 6));
+  --color-400: oklch(0.708 calc(var(--c) * 0.87) calc(var(--h) - 2));
+  --color-500: oklch(0.556 calc(var(--c) * 1) var(--h));
+  --color-600: oklch(0.439 calc(var(--c) * 0.94) calc(var(--h) - 1));
+  --color-700: oklch(0.371 calc(var(--c) * 0.96) calc(var(--h) - 1));
+  --color-800: oklch(0.269 calc(var(--c) * 0.96) calc(var(--h) + 4));
+  --color-900: oklch(0.205 calc(var(--c) * 1) calc(var(--h) + 10));
+  --color-950: oklch(0.145 calc(var(--c) * 1.02) calc(var(--h) + 11));
+
+  --radius: 1rem;
+  --background: var(--color-100);
+  --foreground: var(--color-800);
+  --card: var(--color-100);
+  --card-foreground: var(--color-800);
+  --popover: var(--color-100);
+  --popover-foreground: var(--color-800);
+  --primary: var(--color-800);
+  --primary-foreground: var(--color-100);
+  --secondary: oklch(0.646 0.222 41.116);
+  --secondary-foreground: var(--color-100);
+  --muted: var(--color-200);
+  --muted-foreground: var(--color-500);
+  --accent: var(--color-200);
+  --accent-foreground: var(--color-900);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--color-100);
+  --border: var(--color-300);
+  --input: var(--color-300);
+  --ring: var(--color-300);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --lite: var(--color-200);
+  --highlighted: var(--color-50);
+}
+
+.dark,
+[data-theme='dark'] {
+  --background: var(--color-900);
+  --foreground: var(--color-300);
+  --card: var(--color-900);
+  --card-foreground: var(--color-200);
+  --popover: var(--color-900);
+  --popover-foreground: var(--color-200);
+  --primary: var(--color-200);
+  --primary-foreground: var(--color-900);
+  --secondary: oklch(0.646 0.222 41.116);
+  --secondary-foreground: var(--color-200);
+  --muted: var(--color-800);
+  --muted-foreground: var(--color-400);
+  --accent: var(--color-800);
+  --accent-foreground: var(--color-100);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--color-100);
+  --border: var(--color-700);
+  --input: var(--color-700);
+  --ring: var(--color-700);
+  --lite: var(--color-700);
+  --highlighted: var(--color-800);
+}
+
+@theme inline {
+  --font-sans: 'Onest Variable', ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-lite: var(--lite);
+  --color-highlighted: var(--highlighted);
+}
+
 @layer base {
-  :root {
-    color-scheme: light;
+  * {
+    @apply border-border outline-ring/50;
   }
 
   html {
-    font-family: Inter, sans-serif;
+    color-scheme: light;
+    font-family: 'Onest Variable', ui-sans-serif, system-ui, sans-serif;
   }
 
   body {
     margin: 0;
     min-width: 320px;
     min-height: 100dvh;
-    background: #fafafa;
-    color: #0f172b;
+    background: var(--background);
+    color: var(--foreground);
   }
 
   button,
