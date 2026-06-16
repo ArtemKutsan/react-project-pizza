@@ -7,7 +7,7 @@
  * - error — текст ошибки, если загрузка не удалась
  *
  * Поведение:
- * - Без queryParams загружает рецепты один раз при первом рендере, если статус 'idle'
+ * - Без queryParams загружает полный каталог рецептов один раз при первом рендере, если статус 'idle'
  * - С queryParams перезапрашивает рецепты при изменении query
  *
  * Использование:
@@ -36,7 +36,7 @@ export const useRecipes = (queryParams = null) => {
   }, [dispatch, hasQueryParams, queryKey, queryParams]);
 
   useEffect(() => {
-    // Первичная загрузка для экранов, которые читают общий список рецептов.
+    // Первичная загрузка полного каталога для экранов, которые читают общий список рецептов.
     if (hasQueryParams || status !== 'idle') return;
 
     dispatch(fetchRecipes());

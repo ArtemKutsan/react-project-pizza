@@ -1,26 +1,57 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { getRecipes } from '@/entities/recipe/api/getRecipes';
 import { RecipeList } from '@/entities/recipe/ui';
-import { useRecipes } from '@/entities/recipe';
 
-const PAGE_SIZE = 10;
+const RECIPES_PER_PAGE = 10;
 
 const RecipesPage = () => {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [order, setOrder] = useState('asc');
   const [page, setPage] = useState(1);
+  const [recipes, setRecipes] = useState([]);
+  const [status, setStatus] = useState('idle');
+  const [error, setError] = useState(null);
   const query = useMemo(
     () => ({
       search: search.trim(),
       sortBy,
       order,
-      limit: PAGE_SIZE,
-      skip: (page - 1) * PAGE_SIZE,
+      limit: RECIPES_PER_PAGE,
+      skip: (page - 1) * RECIPES_PER_PAGE,
     }),
     [order, page, search, sortBy],
   );
-  const { recipes, status, error } = useRecipes(query);
-  const hasNextPage = recipes.length === PAGE_SIZE;
+  const hasNextPage = recipes.length === RECIPES_PER_PAGE;
+
+  useEffect(() => {
+    let isActive = true;
+
+    const loadRecipes = async () => {
+      setStatus('loading');
+      setError(null);
+
+      try {
+        const nextRecipes = await getRecipes(query);
+
+        if (!isActive) return;
+
+        setRecipes(nextRecipes);
+        setStatus('succeeded');
+      } catch {
+        if (!isActive) return;
+
+        setError('Failed to load recipes');
+        setStatus('failed');
+      }
+    };
+
+    loadRecipes();
+
+    return () => {
+      isActive = false;
+    };
+  }, [query]);
 
   if (status === 'idle' || status === 'loading') return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
