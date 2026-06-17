@@ -6,11 +6,7 @@ import {
   getCuisines,
 } from '@/entities/recipe/lib';
 import { RecipeListItem } from '@/entities/recipe/ui';
-import {
-  CuisineList,
-  getMealTypeItems,
-  MealTypeSelector,
-} from '@/features/recipe-categorization';
+import { CuisineList, getMealTypeItems, MealTypeSelector } from '@/features/recipe-categorization';
 
 const CategoriesPage = () => {
   const { recipes, status, error } = useRecipes();
@@ -57,15 +53,15 @@ const CategoriesPage = () => {
   return (
     <section className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Categories</h1>
-        <p className="mt-2 text-slate-500">Browse recipes by category</p>
+        <h1 className="text-2xl font-semibold">Categories</h1>
+        <p className="mt-2 text-muted-foreground">Browse recipes by category</p>
       </div>
 
       <MealTypeSelector items={mealTypes} activeItem={activeMealType} onSelect={selectMealType} />
 
       <div>
         <div className="mb-6 flex items-center justify-between gap-4">
-          <h2 className="text-xl font-semibold text-slate-900">
+          <h2 className="text-xl font-semibold">
             {activeCuisine
               ? `${activeCuisine} recipes`
               : activeMealType === 'All'
@@ -77,7 +73,7 @@ const CategoriesPage = () => {
             <button
               type="button"
               onClick={() => setActiveCuisine(null)}
-              className="text-sm font-medium text-lime-700"
+              className="text-sm font-medium text-secondary/80"
             >
               All cuisines
             </button>

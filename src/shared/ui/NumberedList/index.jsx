@@ -5,10 +5,10 @@ const NumberedList = ({ items = [], className = '', itemClassName = '' }) => {
     <ol className={cn('space-y-6', className)}>
       {items.map((item, index) => (
         <li key={item} className={cn('grid grid-cols-[auto_1fr] gap-4', itemClassName)}>
-          <span className="flex size-8 items-center justify-center rounded-full bg-lime-700 text-sm font-semibold text-white">
+          <span className="flex size-8 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
             {index + 1}
           </span>
-          <p className="pt-1 text-slate-600">{item}</p>
+          <p className="pt-1">{item}</p>
         </li>
       ))}
     </ol>

@@ -1,11 +1,11 @@
-import { cn } from '@/shared/lib/cn';
+// import { cn } from '@/shared/lib/cn';
 
 const InfoLabel = ({ icon: Icon, label, value }) => {
   if (!label) {
     return (
       <div className="flex items-center gap-2">
-        <Icon className="size-5 text-slate-700" aria-hidden="true" />
-        <span className="text-sm font-medium text-slate-400">{value}</span>
+        <Icon className="size-5" aria-hidden="true" />
+        <span className="text-sm font-medium text-muted-foreground">{value}</span>
       </div>
     );
   }
@@ -13,10 +13,10 @@ const InfoLabel = ({ icon: Icon, label, value }) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <Icon className="size-5 text-slate-700" aria-hidden="true" />
-        <div className={cn('text-sm text-slate-700')}>{label}</div>
+        <Icon className="size-5" aria-hidden="true" />
+        <span className="text-sm">{label}</span>
       </div>
-      <span className="text-sm font-medium text-slate-400">{value}</span>
+      <span className="text-sm font-medium text-muted-foreground">{value}</span>
     </div>
   );
 };

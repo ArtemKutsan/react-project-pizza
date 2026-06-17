@@ -16,8 +16,8 @@ const MealPlannerCalendar = ({ days, rows, onAddMeal }) => {
               key={day.label}
               className={
                 day.active
-                  ? 'flex min-h-12 items-center justify-center rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700'
-                  : 'flex min-h-12 items-center justify-center px-4 py-2 text-sm font-medium text-slate-700'
+                  ? 'flex min-h-12 items-center justify-center rounded-2xl border border-secondary/10 bg-secondary/5 px-4 py-2 text-sm font-medium text-secondary'
+                  : 'flex min-h-12 items-center justify-center px-4 py-2 text-sm font-medium'
               }
             >
               {day.label}
@@ -28,10 +28,10 @@ const MealPlannerCalendar = ({ days, rows, onAddMeal }) => {
         <div className="space-y-4">
           {rows.map(({ label, Icon, items }) => (
             <div key={label} className="grid gap-4" style={columnTemplate}>
-              <div className="flex items-center justify-center rounded-2xl border border-slate-200 p-4">
+              <div className="flex items-center justify-center rounded-2xl border p-4">
                 <div className="flex flex-col items-center gap-2 text-center">
-                  <Icon className="size-6 text-slate-900" aria-hidden="true" />
-                  <span className="text-sm font-medium text-slate-900">{label}</span>
+                  <Icon className="size-6" aria-hidden="true" />
+                  <span className="text-sm font-medium">{label}</span>
                 </div>
               </div>
 

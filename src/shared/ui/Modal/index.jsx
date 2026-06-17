@@ -76,7 +76,7 @@ const Modal = ({ isOpen, title, children, className, onClose }) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-9999 flex items-center justify-center bg-slate-900/50 p-4"
+      className="fixed inset-0 z-9999 flex items-center justify-center bg-foreground/50 p-4"
       onMouseDown={(event) => {
         // target совпадает с currentTarget только при клике непосредственно по backdrop
         if (event.target === event.currentTarget) {
@@ -90,18 +90,18 @@ const Modal = ({ isOpen, title, children, className, onClose }) => {
         aria-modal="true"
         aria-labelledby={titleId}
         className={cn(
-          'flex max-h-[calc(100dvh-2rem)] w-full max-w-xl flex-col overflow-hidden rounded-2xl bg-white',
+          'flex max-h-[calc(100dvh-2rem)] w-full max-w-xl flex-col overflow-hidden rounded-2xl bg-card',
           className,
         )}
       >
-        <header className="flex items-start justify-between gap-4 border-b border-slate-200 p-4 bg-white">
-          <h2 id={titleId} className="text-xl font-semibold text-slate-900">
+        <header className="flex items-start justify-between gap-4 border-b p-4 bg-card">
+          <h2 id={titleId} className="text-xl font-semibold">
             {title}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="flex size-8 shrink-0 items-center justify-center rounded-lg text-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+            className="flex size-8 shrink-0 items-center justify-center rounded-lg text-xl text-muted-foreground hover:bg-accent hover:text-accent-foreground"
             aria-label="Close modal"
           >
             ×

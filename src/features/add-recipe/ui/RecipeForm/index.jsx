@@ -1,10 +1,7 @@
 import { Button, FormField } from '@/shared/ui';
 
 const RecipeForm = ({ register, handleSubmit, onSubmit, message, isSubmitting }) => (
-  <form
-    className="rounded-3xl border border-slate-200 bg-white p-6"
-    onSubmit={handleSubmit(onSubmit)}
-  >
+  <form className="rounded-3xl border bg-card p-6" onSubmit={handleSubmit(onSubmit)}>
     <div className="grid gap-4 md:grid-cols-2">
       <FormField label="Name" required {...register('name', { required: true })} />
 
@@ -71,8 +68,8 @@ const RecipeForm = ({ register, handleSubmit, onSubmit, message, isSubmitting })
     </div>
 
     <div className="mt-6 flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
-      <p className="text-sm text-lime-700">{message}</p>
-      <Button type="submit" disabled={isSubmitting}>
+      <p className="text-sm text-secondary">{message}</p>
+      <Button type="submit" variant="secondary" disabled={isSubmitting}>
         Add recipe
       </Button>
     </div>

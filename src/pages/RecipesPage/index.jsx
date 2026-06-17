@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getRecipes } from '@/entities/recipe/api/getRecipes';
 import { RecipeList } from '@/entities/recipe/ui';
+import { Button } from '@/shared/ui';
 
 const RECIPES_PER_PAGE = 10;
 
@@ -59,8 +60,8 @@ const RecipesPage = () => {
   return (
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Recipes</h1>
-        <p className="text-slate-500">Find your next favorite recipe.</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Recipes</h1>
+        <p className="text-muted-foreground">Find your next favorite recipe.</p>
       </header>
 
       <div className="flex flex-col gap-4 sm:flex-row">
@@ -71,7 +72,7 @@ const RecipesPage = () => {
             setPage(1);
           }}
           placeholder="Search recipes..."
-          className="min-w-0 flex-1 rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none"
+          className="min-w-0 flex-1 rounded-xl border px-4 py-2 text-sm outline-none"
         />
         <select
           value={sortBy}
@@ -79,7 +80,7 @@ const RecipesPage = () => {
             setSortBy(event.target.value);
             setPage(1);
           }}
-          className="rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none"
+          className="rounded-xl border px-4 py-2 text-sm outline-none"
         >
           <option value="">Sort by default</option>
           <option value="name">Name</option>
@@ -92,7 +93,7 @@ const RecipesPage = () => {
             setOrder(event.target.value);
             setPage(1);
           }}
-          className="rounded-xl border border-slate-200 px-4 py-2 text-sm outline-none"
+          className="rounded-xl border px-4 py-2 text-sm outline-none"
         >
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
@@ -102,23 +103,21 @@ const RecipesPage = () => {
       <RecipeList recipes={recipes} />
 
       <div className="flex items-center justify-between">
-        <button
-          type="button"
+        <Button
+          variant="ghost"
           onClick={() => setPage((currentPage) => Math.max(1, currentPage - 1))}
           disabled={page === 1}
-          className="rounded-xl border border-slate-200 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
         >
           Previous
-        </button>
-        <span className="text-sm text-slate-500">Page {page}</span>
-        <button
-          type="button"
+        </Button>
+        <span className="text-sm text-muted-foreground">Page {page}</span>
+        <Button
+          variant="ghost"
           onClick={() => setPage((currentPage) => currentPage + 1)}
           disabled={!hasNextPage}
-          className="rounded-xl border border-slate-200 px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
         >
           Next
-        </button>
+        </Button>
       </div>
     </section>
   );

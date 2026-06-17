@@ -45,7 +45,7 @@ const RecipeDetailsPage = () => {
 
   return (
     <section className="mx-auto">
-      <article className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+      <article className="overflow-hidden rounded-4xl border bg-card">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
           <div className="h-full">
             <img
@@ -58,26 +58,26 @@ const RecipeDetailsPage = () => {
           <div className="flex flex-col gap-8 px-4 py-6 sm:px-8 sm:py-8">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <Badge>{recipe.difficulty}</Badge>
-              <span className="inline-flex items-baseline gap-2 text-sm text-slate-700">
+              <span className="inline-flex items-baseline gap-2 text-sm">
                 <span className="text-lg text-amber-400">★</span>
-                <span className="font-medium text-slate-700">{recipe.rating}</span>
+                <span className="font-medium">{recipe.rating}</span>
                 <span>({recipe.reviewCount} reviews)</span>
               </span>
             </div>
 
             <div className="space-y-4">
-              <h1 className="max-w-xl text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+              <h1 className="max-w-xl text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
                 {recipe.name}
               </h1>
               {/* Описание */}
-              <p className="max-w-2xl text-slate-500">
+              <p className="max-w-2xl">
                 {recipe?.description ??
                   `A simple and delicious ${recipe?.cuisine?.toLowerCase() || 'cuisine'} classic with fresh ingredients.`}
               </p>
               {author && (
                 <Link
                   to={`/users/${author.id}`}
-                  className="inline-flex items-center gap-3 self-start rounded-2xl border border-slate-200 px-4 py-3 transition-colors hover:border-slate-300 hover:bg-slate-50"
+                  className="inline-flex items-center gap-3 self-start rounded-2xl border px-4 py-3 transition-colors hover:bg-lite"
                 >
                   <img
                     src={author.image}
@@ -85,16 +85,16 @@ const RecipeDetailsPage = () => {
                     className="size-10 rounded-full object-cover"
                   />
                   <span className="flex flex-col">
-                    <span className="text-sm font-semibold text-slate-900">
+                    <span className="text-sm font-semibold">
                       {author.firstName} {author.lastName}
                     </span>
-                    <span className="text-xs text-slate-500">@{author.username}</span>
+                    <span className="text-xs text-muted-foreground">@{author.username}</span>
                   </span>
                 </Link>
               )}
             </div>
 
-            <div className="grid gap-6 border-y border-slate-200 py-6 sm:grid-cols-2 md:grid-cols-3">
+            <div className="grid gap-6 border-y py-6 sm:grid-cols-2 md:grid-cols-3">
               <InfoLabel
                 icon={TimerIcon}
                 label="Prep Time"
@@ -123,28 +123,28 @@ const RecipeDetailsPage = () => {
           </div>
         </div>
 
-        <div className="grid gap-y-8 border-t border-slate-200 p-4 sm:p-8 lg:grid-cols-[0.85fr_1.15fr]">
-          <section className="border-slate-200 lg:border-r lg:pr-8">
+        <div className="grid gap-y-8 border-t p-4 sm:p-8 lg:grid-cols-[0.85fr_1.15fr]">
+          <section className="lg:border-r lg:pr-8">
             <div className="mb-6 flex items-center gap-2">
-              <ChefHatIcon className="ml-1 size-6 text-lime-700" aria-hidden="true" />
-              <h2 className="text-2xl font-semibold text-slate-900">Ingredients</h2>
+              <ChefHatIcon className="ml-1 size-6 text-secondary" aria-hidden="true" />
+              <h2 className="text-2xl font-semibold">Ingredients</h2>
             </div>
             <BulletList items={ingredients} />
           </section>
 
-          <section className="border-slate-200 lg:pl-8">
+          <section className="lg:pl-8">
             <div className="mb-6 flex items-center gap-2">
-              <ListIcon className="ml-1 size-6 text-lime-700" aria-hidden="true" />
-              <h2 className="text-2xl font-semibold text-slate-900">Instructions</h2>
+              <ListIcon className="ml-1 size-6 text-secondary" aria-hidden="true" />
+              <h2 className="text-2xl font-semibold">Instructions</h2>
             </div>
             <NumberedList items={instructions} />
           </section>
         </div>
 
         <div className="p-4 sm:p-8">
-          <div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 text-slate-600">
-            <span className="flex size-10 items-center justify-center rounded-full bg-emerald-50 text-lime-700">
-              <ChefHatIcon className="size-5" aria-hidden="true" />
+          <div className="flex items-center gap-4 rounded-2xl p-4 bg-secondary/5 text-secondary">
+            <span className="flex size-10 items-center justify-center rounded-full bg-secondary/5 text-primary">
+              <ChefHatIcon className="size-5 text-secondary" aria-hidden="true" />
             </span>
             <p>Tip: Use the freshest ingredients for the best flavor!</p>
           </div>

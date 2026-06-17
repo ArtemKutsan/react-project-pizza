@@ -18,7 +18,7 @@ const MealPlannerCard = ({ item, day, mealPeriod, onReplaceMeal }) => {
     <article
       data-day={day}
       data-meal-period={mealPeriod}
-      className="group relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white text-left"
+      className="group relative aspect-square overflow-hidden rounded-2xl border bg-card text-left"
     >
       <button
         type="button"
@@ -31,14 +31,14 @@ const MealPlannerCard = ({ item, day, mealPeriod, onReplaceMeal }) => {
         alt={item.title}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-x-0 bottom-0 flex h-20 flex-col gap-2 justify-between bg-white/95 p-4 transition-all duration-200 group-hover:h-full group-hover:bg-white">
-        <span className="truncate text-sm font-medium leading-5 text-slate-700 group-hover:whitespace-normal">
+      <div className="absolute inset-x-0 bottom-0 flex h-20 flex-col gap-2 justify-between bg-card/95 p-4 transition-all duration-200 group-hover:h-full group-hover:bg-card">
+        <span className="truncate text-sm font-medium leading-5 group-hover:whitespace-normal">
           {item.title}
         </span>
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-between gap-2 p-4 group-hover:bg-white">
-        <span className="text-xs text-slate-500 group-hover:hidden">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-between gap-2 p-4 group-hover:bg-card">
+        <span className="text-xs text-muted-foreground group-hover:hidden">
           {item.caloriesPerServing} kcal
         </span>
         <button
@@ -47,9 +47,9 @@ const MealPlannerCard = ({ item, day, mealPeriod, onReplaceMeal }) => {
           className="pointer-events-auto hidden cursor-pointer group-hover:block"
           aria-label={`Remove ${item.title} from ${day} ${mealPeriod}`}
         >
-          <TrashIcon className="size-4 text-slate-700" aria-hidden="true" />
+          <TrashIcon className="size-4" aria-hidden="true" />
         </button>
-        <LikeIcon className="size-4 text-slate-700" aria-hidden="true" />
+        <LikeIcon className="size-4" aria-hidden="true" />
       </div>
     </article>
   );

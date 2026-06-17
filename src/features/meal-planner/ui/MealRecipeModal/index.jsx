@@ -55,14 +55,14 @@ const MealRecipeModal = ({ selectedSlot, recipes, onClose }) => {
 
   return (
     // Наличие selectedSlot одновременно означает, что пользователь выбрал слот и модалку нужно открыть
-    <Modal isOpen={Boolean(selectedSlot)} title={title} onClose={onClose} className="bg-neutral-50">
+    <Modal isOpen={Boolean(selectedSlot)} title={title} onClose={onClose} className="bg-background">
       <div className="grid gap-4 sm:grid-cols-2">
         {filteredRecipes.map((recipe) => (
           <button
             type="button"
             key={recipe.id}
             onClick={() => handleSelectRecipe(recipe.id)}
-            className="flex cursor-pointer items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 text-left"
+            className="flex cursor-pointer items-center gap-4 rounded-2xl border bg-card p-4 text-left"
           >
             <img
               src={recipe.image}
@@ -70,8 +70,8 @@ const MealRecipeModal = ({ selectedSlot, recipes, onClose }) => {
               className="size-20 shrink-0 rounded-xl object-cover"
             />
             <div className="min-w-0">
-              <h3 className="line-clamp-2 text-sm font-medium text-slate-900">{recipe.name}</h3>
-              <p className="mt-2 text-sm text-slate-500">{recipe.caloriesPerServing} kcal</p>
+              <h3 className="line-clamp-2 text-sm font-medium">{recipe.name}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{recipe.caloriesPerServing} kcal</p>
             </div>
           </button>
         ))}

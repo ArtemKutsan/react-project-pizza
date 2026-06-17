@@ -20,7 +20,7 @@ const MealTypeSelector = ({ items, activeItem, onSelect }) => {
       <button
         type="button"
         onClick={() => scroll(-256)}
-        className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700"
+        className="flex size-10 shrink-0 items-center justify-center rounded-lg border"
         aria-label="Scroll meal types left"
       >
         ‹
@@ -40,7 +40,7 @@ const MealTypeSelector = ({ items, activeItem, onSelect }) => {
       <button
         type="button"
         onClick={() => scroll(256)}
-        className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700"
+        className="flex size-10 shrink-0 items-center justify-center rounded-lg border"
         aria-label="Scroll meal types right"
       >
         ›

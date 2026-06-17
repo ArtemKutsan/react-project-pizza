@@ -88,8 +88,8 @@ const AddRecipePage = () => {
   return (
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
       <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Add Recipe</h1>
-        <p className="text-slate-500">Add a new recipe to the local store.</p>
+        <h1 className="text-2xl font-semibold tracking-tight">Add Recipe</h1>
+        <p className="text-muted-foreground">Add a new recipe to the local store.</p>
       </header>
 
       <RecipeForm

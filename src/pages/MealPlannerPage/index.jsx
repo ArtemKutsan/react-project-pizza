@@ -44,8 +44,8 @@ const MealPlannerPage = () => {
   return (
     <section className="mx-auto flex w-full max-w-7xl flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900">Meal Planner</h1>
-        <p className="mt-2 text-slate-500">Plan your meals for the week</p>
+        <h1 className="text-2xl font-semibold">Meal Planner</h1>
+        <p className="mt-2 text-muted-foreground">Plan your meals for the week</p>
       </div>
       {/* Пустой слот передаёт сюда day и mealPeriod через onAddMeal */}
       <MealPlannerCalendar days={days} rows={mealPlan} onAddMeal={setSelectedSlot} />
