@@ -1,3 +1,4 @@
+export { buildRecipesQuery } from './buildRecipesQuery';
 export { filterRecipesByCuisine } from './filterRecipesByCuisine';
 export { filterRecipesByMealType } from './filterRecipesByMealType';
 export { getCuisines } from './getCuisines';
