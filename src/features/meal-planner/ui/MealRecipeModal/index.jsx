@@ -5,16 +5,6 @@ import { addMeal } from '@/features/meal-planner/model/mealPlanSlice';
 import { Modal } from '@/shared/ui';
 
 /*
-Приводит название периода питания из календаря к типам, используемым в рецептах.
-Для Snack учитываем оба варианта значения, которые могут прийти от API.
-*/
-const getMealTypes = (mealPeriod) => {
-  if (mealPeriod === 'Snack') return ['Snack', 'Snacks'];
-
-  return mealPeriod;
-};
-
-/*
 Feature-компонент модалки выбора рецепта для конкретного слота календаря.
 
 selectedSlot:
@@ -30,8 +20,7 @@ const MealRecipeModal = ({ selectedSlot, recipes, onClose }) => {
 
   // Пересчитываем список только при изменении рецептов или выбранного слота
   const filteredRecipes = useMemo(
-    () =>
-      selectedSlot ? filterRecipesByMealType(recipes, getMealTypes(selectedSlot.mealPeriod)) : [],
+    () => (selectedSlot ? filterRecipesByMealType(recipes, selectedSlot.mealPeriod) : []),
     [recipes, selectedSlot],
   );
 
