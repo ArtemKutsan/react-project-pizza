@@ -1,4 +1,4 @@
-// src/entities/recipe/lib/getMealTypes.js
+import { normalizeMealType } from './normalizeMealType';
 
 // Функция getMealTypes принимает массив рецептов и возвращает массив объектов, каждый из которых содержит имя типа блюда (name) и количество рецептов для этого типа (count). Она использует метод reduce для создания объекта mealTypes, в котором ключами являются названия типов блюд, а значениями - количество рецептов для каждого типа. Затем она преобразует этот объект в массив с помощью Object.entries и map.
 export const getMealTypes = (recipes) => {
@@ -6,7 +6,9 @@ export const getMealTypes = (recipes) => {
   const mealTypes = recipes.reduce(
     (acc, recipe) => {
       (recipe.mealType ?? []).forEach((mealType) => {
-        acc[mealType] = (acc[mealType] ?? 0) + 1;
+        const normalizedMealType = normalizeMealType(mealType);
+
+        acc[normalizedMealType] = (acc[normalizedMealType] ?? 0) + 1;
       });
 
       return acc;
