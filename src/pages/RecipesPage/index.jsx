@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { getRecipes } from '@/entities/recipe';
 import { buildRecipesQuery } from '@/entities/recipe/lib';
 import { RecipeList } from '@/entities/recipe/ui';
+import { RecipeDiscoveryControls } from '@/features/recipe-discovery';
 import { Button } from '@/shared/ui';
 import useDebounce from '@/shared/hooks/useDebounce';
 
@@ -30,6 +31,21 @@ const RecipesPage = () => {
   const hasNextPage = recipes.length === RECIPES_PER_PAGE;
   const isLoading = status === 'idle' || status === 'loading';
   const isEmpty = status === 'succeeded' && recipes.length === 0;
+  const updateSearch = (value) => {
+    setSearch(value);
+
+    if (page !== 1) {
+      setPage(1);
+    }
+  };
+  const updateSortBy = (value) => {
+    setSortBy(value);
+    setPage(1);
+  };
+  const updateOrder = (value) => {
+    setOrder(value);
+    setPage(1);
+  };
 
   useEffect(() => {
     let isActive = true;
@@ -67,43 +83,14 @@ const RecipesPage = () => {
         <p>Find your next favorite recipe</p>
       </header>
 
-      <div className="flex flex-col gap-4 sm:flex-row">
-        <input
-          value={search}
-          onChange={(event) => {
-            setSearch(event.target.value);
-            if (page !== 1) {
-              setPage(1);
-            }
-          }}
-          placeholder="Search recipes..."
-          className="min-w-0 flex-1 rounded-xl border px-4 py-2 text-sm outline-none"
-        />
-        <select
-          value={sortBy}
-          onChange={(event) => {
-            setSortBy(event.target.value);
-            setPage(1);
-          }}
-          className="rounded-xl border px-4 py-2 text-sm outline-none"
-        >
-          <option value="">Sort by default</option>
-          <option value="name">Name</option>
-          <option value="rating">Rating</option>
-          <option value="prepTimeMinutes">Prep time</option>
-        </select>
-        <select
-          value={order}
-          onChange={(event) => {
-            setOrder(event.target.value);
-            setPage(1);
-          }}
-          className="rounded-xl border px-4 py-2 text-sm outline-none"
-        >
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
-      </div>
+      <RecipeDiscoveryControls
+        search={search}
+        sortBy={sortBy}
+        order={order}
+        onSearchChange={updateSearch}
+        onSortByChange={updateSortBy}
+        onOrderChange={updateOrder}
+      />
 
       {error ? (
         <p>{error}</p>
