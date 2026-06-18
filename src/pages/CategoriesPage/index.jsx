@@ -52,10 +52,10 @@ const CategoriesPage = () => {
 
   return (
     <section className="space-y-8">
-      <div>
+      <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold">Categories</h1>
-        <p className="mt-2 text-muted-foreground">Browse recipes by category</p>
-      </div>
+        <p>Browse recipes by category</p>
+      </header>
 
       <MealTypeSelector items={mealTypes} activeItem={activeMealType} onSelect={selectMealType} />
 

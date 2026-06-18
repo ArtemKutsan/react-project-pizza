@@ -61,7 +61,7 @@ const RecipesPage = () => {
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold tracking-tight">Recipes</h1>
-        <p className="text-muted-foreground">Find your next favorite recipe.</p>
+        <p>Find your next favorite recipe</p>
       </header>
 
       <div className="flex flex-col gap-4 sm:flex-row">

@@ -34,7 +34,7 @@ const MainPage = () => {
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold tracking-tight">Main Page</h1>
-        <p className="text-muted-foreground">Button reference surface and UI token preview.</p>
+        <p>Button reference surface and UI token preview</p>
       </header>
 
       <section className="flex flex-col gap-4 rounded-2xl border bg-card p-6">
