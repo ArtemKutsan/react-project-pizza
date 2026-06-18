@@ -23,6 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# Other
+.vscode
 tmp
 
 # AI Agent Knowledge Base & Infrastructure
