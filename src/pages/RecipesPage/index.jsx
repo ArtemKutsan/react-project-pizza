@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getRecipes } from '@/entities/recipe/api/getRecipes';
+import { getRecipes } from '@/entities/recipe';
+import { buildRecipesQuery } from '@/entities/recipe/lib';
 import { RecipeList } from '@/entities/recipe/ui';
 import { Button } from '@/shared/ui';
+import useDebounce from '@/shared/hooks/useDebounce';
 
 const RECIPES_PER_PAGE = 10;
 
@@ -13,17 +15,21 @@ const RecipesPage = () => {
   const [recipes, setRecipes] = useState([]);
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState(null);
+  const debouncedSearch = useDebounce(search, 300);
   const query = useMemo(
-    () => ({
-      search: search.trim(),
-      sortBy,
-      order,
-      limit: RECIPES_PER_PAGE,
-      skip: (page - 1) * RECIPES_PER_PAGE,
-    }),
-    [order, page, search, sortBy],
+    () =>
+      buildRecipesQuery({
+        search: debouncedSearch,
+        sortBy,
+        order,
+        page,
+        pageSize: RECIPES_PER_PAGE,
+      }),
+    [debouncedSearch, order, page, sortBy],
   );
   const hasNextPage = recipes.length === RECIPES_PER_PAGE;
+  const isLoading = status === 'idle' || status === 'loading';
+  const isEmpty = status === 'succeeded' && recipes.length === 0;
 
   useEffect(() => {
     let isActive = true;
@@ -54,9 +60,6 @@ const RecipesPage = () => {
     };
   }, [query]);
 
-  if (status === 'idle' || status === 'loading') return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-
   return (
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-6">
       <header className="flex flex-col gap-2">
@@ -69,7 +72,9 @@ const RecipesPage = () => {
           value={search}
           onChange={(event) => {
             setSearch(event.target.value);
-            setPage(1);
+            if (page !== 1) {
+              setPage(1);
+            }
           }}
           placeholder="Search recipes..."
           className="min-w-0 flex-1 rounded-xl border px-4 py-2 text-sm outline-none"
@@ -100,7 +105,15 @@ const RecipesPage = () => {
         </select>
       </div>
 
-      <RecipeList recipes={recipes} />
+      {error ? (
+        <p>{error}</p>
+      ) : isLoading ? (
+        <p>Loading recipes...</p>
+      ) : isEmpty ? (
+        <p>No recipes found.</p>
+      ) : (
+        <RecipeList recipes={recipes} />
+      )}
 
       <div className="flex items-center justify-between">
         <Button
