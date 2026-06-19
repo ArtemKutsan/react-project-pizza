@@ -8,14 +8,13 @@ import ServingsIcon from '@/assets/icons/servings.svg?react';
 import UtensilsIcon from '@/assets/icons/utensils.svg?react';
 import ChefHatIcon from '@/assets/icons/chef-hat.svg?react';
 import ListIcon from '@/assets/icons/list.svg?react';
-import { useRecipes } from '@/entities/recipe';
+import { useRecipe } from '@/entities/recipe';
 import { fetchUserById, selectUserById, selectUsersStatus } from '@/entities/user';
 
 const RecipeDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { recipes, status, error } = useRecipes();
-  const recipe = recipes.find((item) => String(item.id) === String(id));
+  const { recipe, status, error } = useRecipe(id);
   const authorId = recipe?.userId;
   const author = useSelector((state) => selectUserById(state, authorId));
   const usersStatus = useSelector(selectUsersStatus);
